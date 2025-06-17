@@ -1,0 +1,4431 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light" />
+    <title>OriginOS</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=backspace"
+    />
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #353535;
+        user-select: none;
+        margin-bottom: 120px;
+        scale: 1;
+        touch-action: none;
+      }
+      .phone {
+        width: 330px;
+        height: 700px;
+        border: 3px solid #030303;
+        border-radius: 53px;
+        background: linear-gradient(
+          to bottom,
+          rgb(0, 53, 53),
+          rgb(0, 141, 141)
+        );
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transform: scale(0.9);
+        touch-action: auto;
+        transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+      }
+      .area-thanh {
+        position: absolute;
+        height: 750px;
+        background: transparent;
+        transform: scale(0.9);
+        touch-action: none;
+        z-index: 47;
+      }
+      .wallpaper {
+        width: 100%;
+        height: 100%;
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/462489103_1400206661384168_7007140902614083639_n.jpg")
+          no-repeat center center fixed;
+        background-size: 100%;
+        scale: 100%;
+        transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+        border-radius: 50px;
+        background-size: cover;
+        background-position: center;
+      }
+      .wallpaper.open {
+        scale: 110%;
+        filter: blur(5px);
+      }
+      .wallpaper.lock {
+        height: 50%;
+        scale: 40%;
+        filter: blur(0px);
+        border-radius: 0px;
+      }
+      .circle {
+        width: 30px;
+        height: 30px;
+        background: #474747;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transform: translateY(40%) translateX(50%);
+        font-size: 17px;
+        font-weight: bold;
+        font-family: "Atkinson Hyperlegible", sans-serif;
+        text-align: center;
+      }
+      .left-text {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        font-size: 19px;
+        top: 35%;
+        left: 15px;
+        transform: translateY(-50%);
+        z-index: 4884;
+        font-family: "Noto sans", sans-serif;
+      }
+      .left-text-small {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        font-size: 11px;
+        top: 70%;
+        left: 15px;
+        transform: translateY(-50%);
+        z-index: 4884;
+        color: #a2a2a2;
+        font-family: "Noto sans", sans-serif;
+      }
+      .box13,
+      .box12,
+      .box11,
+      .box10,
+      .box9,
+      .box8,
+      .box7,
+      .box6,
+      .box5,
+      .box4,
+      .box3,
+      .box2,
+      .box1 {
+        position: absolute;
+        overflow: hidden;
+        border-radius: 20px;
+        width: 60px;
+        bottom: 35px;
+        height: 60px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: default;
+        transform: translateX(0%) translateY(0%) scale(1);
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: 12;
+        scale: 100%;
+      }
+      .box4.lock {
+        opacity: 0.2;
+        transform: translateX(40px) translateY(250px) scale(1.4);
+      }
+      .box3.lock {
+        opacity: 0.2;
+        transform: translateX(13px) translateY(250px) scale(1.4);
+      }
+      .box2.lock {
+        opacity: 0.2;
+        transform: translateX(-13px) translateY(250px) scale(1.4);
+      }
+      .box1.lock {
+        opacity: 0.2;
+        transform: translateX(-40px) translateY(250px) scale(1.4);
+      }
+      .box5.lock {
+        opacity: 0.2;
+        transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(100px) translateY(190px) scale(1.5);
+      }
+      .box6.lock {
+        opacity: 0.2;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(40px) translateY(170px) scale(1.3);
+      }
+      .box7.lock {
+        opacity: 0.2;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(-40px) translateY(170px) scale(1.3);
+      }
+      .box8.lock {
+        opacity: 0.2;
+        transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(-100px) translateY(190px) scale(1.5);
+      }
+      .box9.lock {
+        opacity: 0.2;
+        transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(-70px) translateY(20px) scale(1.7);
+      }
+      .box10.lock {
+        opacity: 0.2;
+        transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(70px) translateY(20px) scale(1.7);
+      }
+      .box11.lock {
+        opacity: 0.2;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(0px) translateY(-200px) scale(1.4);
+      }
+      .box1,
+      .box9,
+      .box11,
+      .box8 {
+        left: 10%;
+      }
+      .box2,
+      .box7 {
+        left: 30.5%;
+      }
+      .box3,
+      .box10,
+      .box6 {
+        left: 51.3%;
+      }
+      .box5,
+      .box4 {
+        left: 71.7%;
+      }
+      .box1 {
+        background-color: #3e4043;
+      }
+      .box2 {
+        background-color: rgb(255, 196, 0);
+      }
+      .box3 {
+        background-color: rgba(235, 68, 96, 1);
+      }
+      .box4 {
+        background-color: #eaeaea;
+      }
+      .box5 {
+        background-color: #fdfdfd;
+        bottom: 150px;
+      }
+      .box6 {
+        background-color: #bbdefc;
+        bottom: 150px;
+      }
+      .box7 {
+        background-color: #fefefe;
+        bottom: 150px;
+      }
+      .box8 {
+        background-color: #00cd88;
+        bottom: 150px;
+      }
+      .box9 {
+        background-color: #fefdfc;
+        width: 129px;
+        bottom: 220px;
+        scale: 100%;
+      }
+      .box10 {
+        background-color: #fefdfd;
+        width: 129px;
+        bottom: 220px;
+        scale: 100%;
+      }
+      .box11 {
+        position: relative;
+        background-color: #fefdfd00;
+        width: 260px;
+        height: 135px;
+        top: 70px;
+      }
+      .box11.open {
+        width: 335px;
+        height: 701px;
+        top: 0;
+        left: -4px;
+        border-radius: 50px;
+        transform: scale(1.074);
+        scale: 100%;
+      }
+      .box5.open,
+      .box10.open,
+      .box9.open,
+      .box8.open,
+      .box7.open,
+      .box6.open,
+      .box1.open,
+      .box2.open,
+      .box3.open,
+      .box4.open {
+        width: 335px;
+        height: 701px;
+        bottom: 0;
+        left: -4px;
+        border-radius: 50px;
+        transform: scale(1.074);
+      }
+      .box11::before,
+      .box10::before,
+      .box9::before,
+      .box8::before,
+      .box7::before,
+      .box6::before,
+      .box5::before,
+      .box2::before,
+      .box3::before,
+      .box4::before,
+      .box1::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transition: all 0.3s ease;
+        z-index: 0;
+        border-radius: 20px;
+        opacity: 1;
+      }
+      .box1::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_calculator.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box2::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_filemanager.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box3::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_music.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box4::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_settings.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box5::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_messages.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box6::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_photos.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box7::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_calendar.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box8::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_dialer.png")
+          no-repeat center/cover;
+        background-size: 115%;
+      }
+      .box9::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_clock.png")
+          no-repeat center/cover;
+        background-size: 53%;
+      }
+      .box10::before {
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/system_compass.png")
+          no-repeat center/cover;
+        background-size: 53%;
+      }
+      .box11::before {
+        background: #ffffff00;
+        background-size: 53%;
+      }
+      .box11.hien::before,
+      .box10.hien::before,
+      .box9.hien::before,
+      .box8.hien::before,
+      .box7.hien::before,
+      .box6.hien::before,
+      .box5.hien::before,
+      .box4.hien::before,
+      .box3.hien::before,
+      .box2.hien::before,
+      .box1.hien::before {
+        opacity: 1;
+      }
+      .clicke11,
+      .clicke10,
+      .clicke9,
+      .clicke8,
+      .clicke7,
+      .clicke6,
+      .clicke5,
+      .clicke1,
+      .clicke2,
+      .clicke3,
+      .clicke4 {
+        position: absolute;
+        background-color: #009e5400;
+        height: 60px;
+        width: 60px;
+        font-size: 24px;
+        font-weight: bold;
+        color: transparent;
+        cursor: pointer;
+        z-index: 345;
+        outline: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .clicke1 {
+        bottom: 35px;
+        left: 10%;
+        height: 80px;
+      }
+      .clicke2 {
+        bottom: 35px;
+        left: 30.5%;
+        height: 80px;
+      }
+      .clicke3 {
+        bottom: 35px;
+        right: 30.5%;
+        height: 80px;
+      }
+      .clicke4 {
+        bottom: 35px;
+        right: 10%;
+        height: 80px;
+      }
+      .clicke5 {
+        bottom: 150px;
+        right: 10%;
+      }
+      .clicke6 {
+        bottom: 150px;
+        right: 30.5%;
+      }
+      .clicke7 {
+        bottom: 150px;
+        left: 30.5%;
+      }
+      .clicke8 {
+        bottom: 150px;
+        left: 10%;
+      }
+      .clicke9 {
+        bottom: 220px;
+        width: 129px;
+        left: 10%;
+      }
+      .clicke10 {
+        bottom: 220px;
+        right: 10%;
+        width: 129px;
+      }
+      .clicke11 {
+        top: 70px;
+        left: 10%;
+        height: 135px;
+        width: 260px;
+      }
+      .thanh {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 330px;
+        height: 60px;
+        background: #77000000;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        line-height: 40px;
+        user-select: none;
+        cursor: grab;
+        transform: translateX(-50%);
+        z-index: 2020;
+        display: none;
+        touch-action: auto;
+      }
+      .thanh-status {
+        position: absolute;
+        top: 0;
+        right: 50%;
+        transform: translateX(50%);
+        width: 330px;
+        height: 65px;
+        background: #77000000;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        line-height: 40px;
+        user-select: none;
+        cursor: grab;
+        z-index: 2020;
+        display: flex;
+        touch-action: auto;
+      }
+      .thanh-status2 {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 330px;
+        height: 40px;
+        background: #26770000;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        line-height: 40px;
+        user-select: none;
+        cursor: grab;
+        z-index: 2020;
+        display: flex;
+        touch-action: auto;
+      }
+      .thanh.open {
+        display: block;
+      }
+      .nav {
+        position: fixed;
+        bottom: 4px;
+        left: 50%;
+        width: 30px;
+        height: 1px;
+        opacity: 0;
+        background: #6b6b6b !important;
+        border-radius: 20px;
+        text-align: center;
+        user-select: none;
+        cursor: grab;
+        transform: translateX(-50%);
+        z-index: 123123;
+        transition: all 0.3s;
+        z-index: 12234942;
+      }
+      .nav.open {
+        width: 130px;
+        height: 6px;
+        opacity: 1;
+      }
+      .lp {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        backdrop-filter: blur(0px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+      .lp.open {
+        opacity: 0;
+      }
+      .khayapp {
+        position: absolute;
+        background-color: #ffffff65;
+        border-radius: 30px;
+        width: 287px;
+        bottom: 25px;
+        height: 80px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: default;
+        left: 50%;
+        transform: translateX(-50%) translateY(0%) scale(1);
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: 4;
+      }
+      .khayapp.lock {
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(-50%) translateY(200px) scale(1.5);
+      }
+      /* lock */
+      .lockscreen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 330px;
+        height: 700px;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: all 0.3s;
+        background: transparent;
+        scale: 1;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .lock-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(173, 216, 230, 0);
+        border-radius: 53px;
+      }
+      .lock-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        user-select: none;
+        font-weight: 600;
+      }
+      .lock-clock {
+        position: absolute;
+        font-size: 100px;
+        line-height: 90px;
+        font-weight: 600;
+        top: 120px;
+        user-select: none;
+        font-weight: bold;
+        font-family: "Abril Fatface", serif;
+        transform: scale(1) translateY(0px);
+        transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+      }
+      .lock-clock.tat {
+        transform: scale(0.95) translateY(160px);
+      }
+      .date-display {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        font-size: 20px;
+        top: 95px;
+        left: 50%;
+        transform: translateX(-50%) translateY(0px);
+        scale: 1;
+        transform-origin: center;
+        z-index: 4884;
+        font-family: "Noto sans", sans-serif;
+        transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+      }
+      .date-display.tat {
+        transform: translateY(165px) translateX(-52%) scale(0.95);
+      }
+      .lock-fingerprint {
+        display: flex;
+        position: absolute;
+        bottom: 100px;
+        width: 60px;
+        height: 60px;
+        background-color: #00000000;
+        border-radius: 100px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.3s;
+        justify-content: center;
+        align-items: center;
+      }
+      .lock-fingerprint:hover {
+        transform: scale(0.95);
+      }
+      .lock-fingerprint.hidden {
+        opacity: 0;
+      }
+      .power-button {
+        position: absolute;
+        display: fixed;
+        top: 35%;
+        left: calc(100% - 16px);
+        transform: translateY(0%);
+        width: 10px;
+        height: 80px;
+        background-color: #ff1313;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 633426;
+        pointer-events: auto;
+      }
+      .power-button.hidden {
+        pointer-events: none;
+      }
+      .app1,
+      .app2,
+      .app3,
+      .app4main,
+      .app4animation,
+      .app4theme,
+      .app4wallpaper,
+      .app4aod,
+      .app4lock,
+      .app4credits,
+      .app4home,
+      .app4finger,
+      .app4vesion,
+      .app4,
+      .app5,
+      .app6,
+      .app7,
+      .app8,
+      .app9,
+      .app10,
+      .app11,
+      .app12 {
+        position: absolute;
+        display: flex;
+        background: #eaeaea;
+        width: 335px;
+        height: 705px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: default;
+        left: 50%;
+        transform: translateX(-50%) translateY(0%) scale(1);
+        transform-origin: center;
+        top: 0px;
+        z-index: 1223442;
+        transition: all 0.6s;
+        opacity: 0;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: "Noto sans", sans-serif;
+      }
+      .app1.open,
+      .app2.open,
+      .app3.open,
+      .app4main.open,
+      .app4animation.open,
+      .app4theme.open,
+      .app4wallpaper.open,
+      .app4aod.open,
+      .app4lock.open,
+      .app4credits.open,
+      .app4home.open,
+      .app4finger.open,
+      .app4vesion.open,
+      .app5.open,
+      .app6.open,
+      .app7.open,
+      .app8.open,
+      .app9.open,
+      .app10.open,
+      .app11.open,
+      .app12.open {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+      .app4,
+      .app4theme,
+      .app4wallpaper,
+      .app4aod,
+      .app4credits,
+      .app4home,
+      .app4finger,
+      .app4vesion,
+      .app4animation {
+        opacity: 1;
+        transform: translateX(75%) scale(1);
+        border-radius: 49px;
+        box-shadow: 0 0 50px #000000;
+      }
+      .app4lock {
+        opacity: 1;
+        transform: translateX(75%) scale(1);
+        border-radius: 49px;
+        box-shadow: 0 0 50px #000000;
+        overflow: hidden;
+        background: linear-gradient(
+          to bottom,
+          rgb(0, 53, 53),
+          rgb(0, 141, 141)
+        );
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .app4.open,
+      .app4theme.open,
+      .app4wallpaper.open,
+      .app4aod.open,
+      .app4lock.open,
+      .app4credits.open,
+      .app4home.open,
+      .app4finger.open,
+      .app4vesion.open,
+      .app4animation.open {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 50px #000000;
+      }
+      .originos {
+        position: absolute;
+        display: fixed;
+        border-radius: 20px;
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/OriginOS_setting.jpg")
+          no-repeat center center fixed;
+        background-size: 105%;
+        width: 90%;
+        height: 200px;
+        bottom: 35px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: default;
+        left: 50%;
+        top: 100px;
+        transform: translateX(-50%) translateY(0%) scale(1);
+        z-index: 442;
+      }
+      .status-time-widget {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        top: 50%;
+        left: 47%;
+        transform: translate(-50%, -50%);
+        color: rgb(42, 42, 42);
+        font-size: 100px;
+        z-index: 100;
+        font-family: "Abril Fatface", sans-serif;
+        font-weight: 600;
+        z-index: 20012300;
+        transition: all 0.3s;
+        opacity: 1;
+        scale: 0.9;
+      }
+      .status-time {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        top: 10px;
+        left: 30px;
+        color: rgb(78, 78, 78);
+        font-size: 17px;
+        z-index: 100;
+        font-family: "Noto sans", sans-serif;
+        font-weight: 600;
+        z-index: 20000;
+        transition: all 0.3s;
+        opacity: 00;
+        scale: 0.9;
+      }
+      .status-time.hien {
+        opacity: 1;
+      }
+      .status-time.open {
+        color: rgb(255, 255, 255);
+      }
+      .status-battery {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        width: 33px;
+        height: 18px;
+        border: 2px solid rgb(78, 78, 78);
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+        background: rgba(255, 255, 255, 0);
+        box-sizing: border-box;
+        position: absolute;
+        z-index: 100;
+        font-weight: bold;
+        font-family: "Noto sans", sans-serif;
+        font-size: 80%;
+        color: rgb(42, 42, 42);
+        z-index: 12323;
+        transition: all 0.3s;
+        scale: 0.9;
+      }
+      .battery-small.close {
+        background: rgb(255, 255, 255);
+      }
+      .status-battery.close {
+        border: 2px solid rgb(255, 255, 255);
+        right: 35px;
+      }
+      .battery-small {
+        position: absolute;
+        left: 102%;
+        width: 3px;
+        height: 8px;
+        border-radius: 100px;
+        display: flex;
+        background: rgb(78, 78, 78);
+        transition: all 0.3s;
+      }
+      .battery-small2 {
+        position: absolute;
+        left: 10%;
+        width: calc(100% / 1.25);
+        height: 10px;
+        border-radius: 3px;
+        display: flex;
+        background: rgb(255, 255, 255);
+      }
+      .battery-num {
+        z-index: 1;
+        color: rgb(42, 42, 42);
+        transition: all 0.3s;
+        font-weight: bold;
+        font-size: 12px;
+      }
+      .battery-num.close {
+        color: rgba(255, 255, 255, 0);
+      }
+      .camera {
+        transform: translateX(-50%);
+        position: absolute;
+        display: fixed;
+        top: 10px;
+        left: 50%;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background-color: #000000;
+        z-index: 1231673;
+      }
+      .lp2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.295);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 199;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1;
+      }
+      .lp2.open {
+        opacity: 1;
+      }
+      .left-text-tb {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        font-size: 18px;
+        top: 150px;
+        left: 35px;
+        transform: translateY(0%);
+        z-index: 20000;
+        font-weight: 400;
+        color: #ffffff;
+        font-family: "Noto sans", sans-serif;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+      }
+      .left-text-tb.open {
+        font-size: 20px;
+        top: 120px;
+        left: 35px;
+        opacity: 1;
+      }
+      .date-display2 {
+        position: absolute;
+        flex-grow: 1;
+        display: flex;
+        justify-content: none;
+        font-size: 19px;
+        top: 95px;
+        left: 0;
+        transform: translateX(0%) translateY(0px);
+        scale: 1;
+        transform-origin: center;
+        z-index: 4884;
+        font-family: "Noto sans", sans-serif;
+        transition: all 0.3s ease-out;
+      }
+      .allApp {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: none;
+        transform: scale(1);
+        transition: all 1.5s cubic-bezier(0.07, 1.33, 1, 1);
+        z-index: 3;
+        scale: 1;
+      }
+      .allApp.open {
+        transform: scale(0.93);
+      }
+      .allApp.lock {
+        transition: all 1.5s cubic-bezier(0.07, 1.33, 1, 1);
+        transform: scale(2.3) rotateX(10deg);
+        opacity: 0;
+      }
+      /* Màn hình loading */
+      #loading-screen {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-45%);
+        width: 100vw;
+        height: 100vh;
+        background: #353535;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+        pointer-events: auto;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #ccc;
+        border-top-color: #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 12px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      p {
+        height: 0px;
+        font-size: 15px;
+        font-weight: 900;
+        font-family: "Noto sans", sans-serif;
+        color: #ffffff;
+      }
+      .back-button {
+        position: fixed;
+        top: 55px;
+        left: 30px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: "Noto sans", sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 5px 10px;
+        z-index: 1000;
+        scale: 1.2;
+      }
+      /* Mũi tên tạo bằng pseudo-element */
+      .back-button::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-left: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+        margin-right: -2px;
+      }
+      .khaysetting1,
+      .khaysetting1-2,
+      .khaysetting3,
+      .khaysetting4,
+      .khaysetting5,
+      .khaysetting1-1,
+      .khaysetting1-3 {
+        position: absolute;
+        display: fixed;
+        border-radius: 15px;
+        background: #ffffff;
+        width: 90%;
+        height: 55px;
+        top: 300px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: default;
+        left: 50%;
+        transform: translateX(-50%) translateY(40px) scale(1);
+        z-index: 443;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .khaysetting1-2 {
+        top: 360px;
+      }
+      .khaysetting1-3 {
+        top: 420px;
+      }
+      .khaysetting1 {
+        top: 160px;
+      }
+      .khaysetting3 {
+        top: 220px;
+      }
+      .khaysetting4 {
+        top: 280px;
+      }
+      .click-area {
+        position: absolute;
+        background-color: #009e0500;
+        height: 55px;
+        width: 280px;
+        top: 225px;
+        font-size: 24px;
+        font-weight: bold;
+        color: transparent;
+        cursor: pointer;
+        z-index: 346765;
+        outline: none;
+        left: 50%;
+        transform: translateX(-50%);
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .click-back-about {
+        position: absolute;
+        background-color: #009e5400;
+        height: 55px;
+        width: 55px;
+        top: 70px;
+        font-size: 24px;
+        font-weight: bold;
+        color: transparent;
+        cursor: pointer;
+        z-index: 346765;
+        outline: none;
+        left: 0;
+        transform: translateX(-250%);
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .select-speed-wrapper {
+        margin-bottom: 200px;
+        display: none;
+        z-index: 12312;
+        transform: translateY(50%);
+      }
+      .speed-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        position: absolute;
+        z-index: 1;
+        transform: translateY(70%);
+      }
+      .speed-box {
+        background: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 16px;
+        border: 2px solid transparent;
+        transition: border 0.2s ease;
+        z-index: 123;
+      }
+      .speed-box.active {
+        border: 2px solid aqua;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+      .box-wrapper {
+        position: relative;
+        width: 150px;
+        height: 250px;
+        bottom: 120px;
+        border: 2px solid #5a5a5a;
+        border-radius: 30px;
+      }
+      .scaling-box {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 40px;
+        background-color: #007bff;
+        border-radius: 15px;
+      }
+      @keyframes scaleUpDown {
+        0% {
+          width: 40px;
+          height: 40px;
+          bottom: 10px;
+          border-radius: 15px;
+        }
+        30% {
+          width: 150px;
+          height: 250px;
+          bottom: 0px;
+          border-radius: 28px;
+        }
+        50% {
+          width: 150px;
+          height: 250px;
+          bottom: 0px;
+          border-radius: 28px;
+        }
+        80% {
+          width: 40px;
+          height: 40px;
+          bottom: 10px;
+          border-radius: 15px;
+        }
+        100% {
+          width: 40px;
+          height: 40px;
+          bottom: 10px;
+          border-radius: 15px;
+        }
+      }
+      .aod-btn,
+      .lock-btn,
+      .finger-btn,
+      .wallpaper-btn {
+        position: absolute;
+        left: 53%;
+        top: 100px;
+        width: 130px;
+        height: 160px;
+        background: #ffffff;
+        border-radius: 25px;
+      }
+      .aod-btn {
+        left: 8%;
+      }
+      .finger-btn,
+      .lock-btn {
+        top: 280px;
+        left: 8%;
+      }
+      .finger-btn {
+        left: 53%;
+        height: 75px;
+      }
+      .aod-preview,
+      .wallpaper-preview2,
+      .wallpaper-preview {
+        position: absolute;
+        width: 90%;
+        height: 100px;
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/462489103_1400206661384168_7007140902614083639_n.jpg")
+          no-repeat center center fixed;
+        background-size: 100%;
+        scale: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(3%);
+        transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+        border-radius: 18px;
+        bottom: 10px;
+        background-size: cover;
+        background-position: center;
+      }
+      .aod-preview {
+        background: #000000;
+      }
+      .button-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        width: 260px;
+      }
+      .img-button {
+        width: 100%;
+        aspect-ratio: 9/16;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 3px solid gray;
+        cursor: pointer;
+        transition: border 0.2s ease;
+        position: relative;
+        background: #e0e0e0;
+      }
+      .img-button img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .img-button.active {
+        border-color: rgb(0, 217, 255);
+        color: rgb(0, 217, 255);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+      .add-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        color: rgb(0, 0, 0);
+        background: #ffffff;
+        border: 3px solid gray;
+      }
+      input[type="file"] {
+        display: none;
+      }
+      .setting-title {
+        font-size: 16px;
+      }
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 28px;
+        background: #ccc;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        flex-shrink: 0;
+      }
+      .toggle-switch::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 22px;
+        height: 22px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: left 0.25s ease;
+      }
+      .toggle-switch.active {
+        background: #00ffff;
+      }
+      .toggle-switch.active::before {
+        left: 25px;
+      }
+      .setting-item {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        position: absolute;
+        top: 100px;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        border-radius: 15px;
+        padding: 12px 20px;
+        margin-bottom: 15px;
+        width: 260px;
+        max-width: 400px;
+        margin: 0 auto 15px;
+      }
+      .header {
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        background-color: rgba(255, 255, 255, 0.85);
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+      }
+      .clock-display {
+        color: white;
+        font-size: 100px;
+        font-weight: 600;
+        font-family: "Abril Fatface", serif;
+        transition: font-size 0.2s ease, color 0.2s ease;
+        margin-top: 100px;
+      }
+      .controls {
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 20px 20px 0 0;
+        width: 88%;
+        height: 220px;
+        padding: 20px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .control-group label {
+        font-weight: bold;
+        font-size: 14px;
+        color: #333;
+      }
+      .color-bar {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .color-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        transition: transform 0.2s;
+      }
+      .color-circle:hover {
+        transform: scale(1.1);
+      }
+      .add-color {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        color: #666;
+        background: #eee;
+      }
+      input[type="color"] {
+        display: none;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+      .top-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .top-buttons button {
+        flex: 1;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        background: #ffffff;
+        cursor: pointer;
+        transition: background 0.3s;
+        border: 2px solid rgb(255, 255, 255);
+      }
+      .wallpaper2 {
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        background: url("https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/462489103_1400206661384168_7007140902614083639_n.jpg")
+          no-repeat center center fixed;
+        background-size: 100%;
+        transform: translateY(250px);
+        scale: 80%;
+        transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97);
+        border-radius: 20px;
+        z-index: -1;
+        background-size: cover;
+        background-position: center;
+      }
+      .lp {
+        position: absolute;
+        top: -30px;
+        left: -20px;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(0px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.2, 0.2, 0.12, 1);
+        z-index: 20;
+      }
+      .lp.open {
+        opacity: 1;
+      }
+      .calculator_calc {
+        width: 320px;
+        padding: 20px;
+      }
+      .display_calc {
+        position: absolute;
+        top: 150px;
+        height: 90px;
+        width: 70%;
+        text-align: right;
+        padding: 15px;
+        font-size: 2rem;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        font-weight: 800;
+        font-family: "Lato", sans-serif;
+        color: #616161;
+      }
+      .buttons_calc {
+        position: absolute;
+        top: 280px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .btn_calc {
+        border: none;
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+        font-size: 1.4rem;
+        cursor: pointer;
+        background: #f3f3f3;
+        transition: background 0.2s;
+        font-weight: 800;
+        font-family: "Lato", sans-serif;
+        color: #353535;
+      }
+      .btn_calc:hover {
+        background: #e0e0e0;
+      }
+      .orange_calc {
+        background: #fbc4ab;
+        color: #d84315;
+      }
+      .equal_calc {
+        background: #f0625d;
+        color: white;
+        font-weight: bold;
+      }
+      .gray_calc {
+        color: #d84315;
+      }
+      .container_phone {
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .display_phone {
+        margin-top: 60px;
+        font-size: 2rem;
+        text-align: center;
+        height: 40px;
+        margin-bottom: 60px;
+      }
+      .keypad_phone {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0px;
+        margin-bottom: 0px;
+      }
+      .btn_phone {
+        width: 70px;
+        margin-right: 15px;
+        margin-left: 15px;
+        height: 70px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        border: none;
+        font-weight: 550;
+        font-family: "Lato", sans-serif;
+        background: #ffffff00;
+        color: rgb(70, 70, 70);
+      }
+      .btn_phone span {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #94ba94;
+      }
+      .callbtn_phone {
+        width: 70px;
+        height: 70px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 30px;
+        background: #9fdca0;
+        color: white;
+      }
+      .delbtn_phone {
+        width: 70px;
+        height: 70px;
+        margin-left: -5px;
+        margin-right: -5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 30px;
+        background: #9fdca000;
+        color: rgb(0, 0, 0);
+      }
+      .navbar_phone {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        border-top: 2px solid #86868642;
+        padding: 8px 0;
+        gap: 50px;
+      }
+      .navitem_phone {
+        width: 60px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        display: grid;
+        place-items: center;
+        font-size: 0.9rem;
+        color: #777;
+      }
+      .navitem_phone.active {
+        color: #67c776;
+      }
+      .navicon_phone {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 4px;
+      }
+      .wallpaper-btn-2 {
+        position: absolute;
+        top: 57px;
+        right: 30px;
+        padding: 0 10px;
+        height: 30px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid white;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        border-radius: 17.5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .settings-box {
+        background-color: white;
+        border-radius: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        width: 270px;
+        height: 75px;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%) scale(90%);
+      }
+
+      .box-title {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .button-container {
+        display: flex;
+        gap: 15px;
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .scale-button {
+        width: 90px;
+        height: 60px;
+        font-size: 18px;
+        cursor: pointer;
+        background: white;
+        border: 2px solid rgb(119, 119, 119);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      .scale-button:hover {
+        border-color: #a0a0a0;
+      }
+
+      .scale-button.active {
+        border-color: aqua;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+
+      .system-toast {
+        position: fixed;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(211, 211, 211, 0.85);
+        color: rgb(26, 26, 26);
+        padding: 12px 20px;
+        border-radius: 18px;
+        font-size: 12px;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+        font-family: "Noto sans", sans-serif;
+      }
+
+      .system-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .half-border-box {
+        top: 120px;
+        width: 250px;
+        height: 150px;
+        background: #000000;
+        position: absolute;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+      }
+
+      .half-border-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; /* nửa trên */
+        border: solid rgb(50, 50, 50);
+        border-width: 0 4px 4px 4px; /* viền trên, trái, phải */
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        box-sizing: border-box;
+        pointer-events: none;
+        background: transparent;
+      }
+      .fingerprint_preview {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 90px;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .button-group-finger {
+        display: flex;
+        gap: 10px;
+      }
+
+      .button-finger {
+        width: 120px;
+        height: 80px;
+        font-size: 18px;
+        cursor: pointer;
+        background: white;
+        border: 2px solid rgb(225, 225, 225);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        outline: none;
+        color: #242424;
+        font-weight: 600;
+        font-family: "Noto sans", sans-serif;
+      }
+
+      .button-finger.acctive {
+        border: 2px solid aqua;
+      }
+      .content-box-vesion {
+        width: 90%;
+        height: 115px;
+        background: white;
+        border-radius: 15px;
+        padding: 15px 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .content-box-vesion h2 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Noto sans", sans-serif;
+      }
+
+      .content-box-vesion p {
+        margin: 0;
+        font-size: 14px;
+        color: gray;
+        font-family: "Noto sans", sans-serif;
+      }
+
+      .vesion_text {
+        position: fixed;
+        top: 110px;
+        left: 8.5%;
+        text-align: left;
+        width: 80%;
+        font-size: 10px;
+        color: gray;
+        pointer-events: none;
+        z-index: 9999;
+        font-family: "Noto sans", sans-serif;
+      }
+
+      .footer-text {
+        position: fixed;
+        bottom: 20px;
+        width: 80%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: gray;
+        pointer-events: none;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div class="spinner"></div>
+      <p>Loading OriginOS V1.2.00</p>
+      <p>by: Quandz24</p>
+      <p>tiktok: @sungsamtech - @._naq.</p>
+    </div>
+    <div class="area-thanh">
+      <div class="thanh" id="thanh"></div>
+      <div class="click-area" id="khaysetting1" style="display: none"></div>
+      <div
+        class="click-area"
+        id="khaysetting2"
+        style="display: none; top: 285px"
+      ></div>
+      <div class="thanh-status" id="thanh-status"></div>
+    </div>
+    <div class="phone">
+      <div id="systemToast" class="system-toast"></div>
+      <div class="lp2" id="lp2"></div>
+      <div class="left-text-tb" id="left-text-tb">notification center</div>
+      <div class="thanh-status2" id="thanh-status2"></div>
+      <div class="status-battery">
+        <div class="battery-small"></div>
+        <div class="battery-small2"></div>
+        <div class="battery-num" id="batery-num">20</div>
+      </div>
+      <div class="camera"></div>
+      <div class="status-time" id="lockclock2">
+        <div class="date-display2" id="dateText2"></div>
+      </div>
+      <div class="allApp" id="allApp">
+        <div class="lp" id="lp"></div>
+        <div class="khayapp" id="khayapp"></div>
+        <div class="box1" id="box1">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app1" id="app1">
+            <div class="display_calc" id="display_calc">0</div>
+            <div class="buttons_calc">
+              <button class="btn_calc gray_calc" onclick="clearDisplay_calc()">
+                AC
+              </button>
+              <button class="btn_calc gray_calc" onclick="backspace_calc()">
+                ⌫
+              </button>
+              <button class="btn_calc gray_calc" onclick="append_calc('+/-')">
+                ±
+              </button>
+              <button class="btn_calc orange_calc" onclick="append_calc(':')">
+                ÷
+              </button>
+              <button class="btn_calc" onclick="append_calc('7')">7</button>
+              <button class="btn_calc" onclick="append_calc('8')">8</button>
+              <button class="btn_calc" onclick="append_calc('9')">9</button>
+              <button class="btn_calc orange_calc" onclick="append_calc('×')">
+                ×
+              </button>
+              <button class="btn_calc" onclick="append_calc('4')">4</button>
+              <button class="btn_calc" onclick="append_calc('5')">5</button>
+              <button class="btn_calc" onclick="append_calc('6')">6</button>
+              <button class="btn_calc orange_calc" onclick="append_calc('-')">
+                −
+              </button>
+              <button class="btn_calc" onclick="append_calc('1')">1</button>
+              <button class="btn_calc" onclick="append_calc('2')">2</button>
+              <button class="btn_calc" onclick="append_calc('3')">3</button>
+              <button class="btn_calc orange_calc" onclick="append_calc('+')">
+                +
+              </button>
+              <button class="btn_calc" onclick="append_calc('%')">%</button>
+              <button class="btn_calc" onclick="append_calc('0')">0</button>
+              <button class="btn_calc" onclick="append_calc('.')">.</button>
+              <button class="btn_calc equal_calc" onclick="calculate_calc()">
+                =
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="box2" id="box2">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app2" id="app2">none</div>
+        </div>
+        <div class="box3" id="box3">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app3" id="app3">none</div>
+        </div>
+        <div class="box4" id="box4">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app4main" id="app4main">
+            <div class="footer-text">Made by Quandz24</div>
+            <div
+              class="left-text"
+              style="
+                left: 50%;
+                top: 120px;
+                font-size: 30px;
+                transform: translateX(-50%);
+              "
+            >
+              Setting
+            </div>
+            <div class="khaysetting1" id="about_setting">
+              <div class="circle">i</div>
+              <div class="left-text" style="left: 60px">About</div>
+              <div class="left-text-small" style="left: 60px">
+                OS &middot; information
+              </div>
+            </div>
+            <div class="khaysetting3" id="animation_setting">
+              <div
+                class="circle"
+                style="
+                  background: url('https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/icon_animation.png')
+                    no-repeat center center fixed;
+                  background-size: 100%;
+                "
+              ></div>
+              <div class="left-text" style="left: 60px">Animation</div>
+              <div class="left-text-small" style="left: 60px">
+                speed animation
+              </div>
+            </div>
+            <div class="khaysetting4" id="theme_setting">
+              <div
+                class="circle"
+                style="
+                  background: url('https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/theme_icon.png')
+                    no-repeat center center fixed;
+                  background-size: 100%;
+                "
+              ></div>
+              <div class="left-text" style="left: 60px">Theme</div>
+              <div class="left-text-small" style="left: 60px">
+                Wallpaper &middot; finger print
+              </div>
+            </div>
+            <div class="app4" id="app4" style="z-index: 5020">
+              <div class="back-button" id="back_to_setting">About</div>
+              <div class="khaysetting1-1">
+                <div class="left-text">Vesion</div>
+                <div class="left-text-small">V1.2.00</div>
+              </div>
+              <div class="khaysetting1-2" id="khaysetting1-2">
+                <div class="left-text">Develop</div>
+                <div class="left-text-small">
+                  TikTok: @sungsamtech - galaxyA15&#10084;
+                </div>
+              </div>
+              <div
+                class="app4vesion"
+                id="app4vesion"
+                style="z-index: 10021323; display: none"
+              >
+                <div class="back-button" id="back_to_setting10">Vesion</div>
+                <div class="vesion_text">
+                  <div class="content-box-vesion">
+                    <h2>Vesion 1.2.00</h2>
+                    <p>
+                      fix lag<br />More customization<br />Add Calculator and
+                      Phone app <br />Add dark mode
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="app4credits"
+                id="app4credits"
+                style="z-index: 1002133; display: none"
+              >
+                <div class="back-button" id="back_to_setting7">Credits</div>
+                <div
+                  class="setting-item"
+                  style="
+                    background: #ffffff;
+                    color: #000000;
+                    font-size: 17px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
+                  "
+                >
+                  @vivo_x200_pro_mini_zeiss
+                </div>
+                <div
+                  class="setting-item"
+                  style="
+                    background: #ffffff;
+                    color: #000000;
+                    font-size: 17px;
+                    top: 130px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
+                  "
+                >
+                  @toi.daylabo2015
+                </div>
+              </div>
+              <div class="originos"></div>
+            </div>
+            <div
+              class="app4animation"
+              id="app4animation"
+              style="z-index: 123213123"
+            >
+              <div class="back-button" id="back_to_setting2">Animation</div>
+              <div class="box-wrapper">
+                <div class="scaling-box" id="scaling-box"></div>
+              </div>
+              <div class="speed-container">
+                <div class="speed-box" data-speed="0.8">0.8x</div>
+                <div class="speed-box active" data-speed="1">1x</div>
+                <div class="speed-box" data-speed="1.5">1.5x</div>
+                <div class="speed-box" data-speed="4">4x</div>
+                <div class="speed-box" data-speed="8">8x</div>
+                <div class="speed-box" data-speed="10">10x</div>
+              </div>
+              <div class="setting-item" style="top: none; margin-top: 440px">
+                <div class="setting-title"></div>
+                <div class="left-text">Blur</div>
+                <div class="left-text-small">Lag on some phone</div>
+                <div
+                  class="toggle-switch"
+                  id="blurApp"
+                  data-key="blurApp"
+                ></div>
+              </div>
+            </div>
+            <div class="app4theme" id="app4theme" style="z-index: 123213123">
+              <div class="back-button" id="back_to_setting3">Theme</div>
+              <div class="wallpaper-btn" id="wallpaper-btn">
+                <div style="font-size: 15px; transform: translateY(70%)">
+                  wallpaper
+                </div>
+                <div class="wallpaper-preview"></div>
+              </div>
+              <div class="aod-btn" id="aod-btn">
+                <div style="font-size: 15px; transform: translateY(70%)">
+                  AOD
+                </div>
+                <div
+                  class="aod-preview"
+                  style="
+                    color: #b0b0b0;
+                    font-size: 35px;
+                    font-weight: bold;
+                    font-family: 'Abril Fatface', serif;
+                  "
+                  id="clock-aod-preview"
+                >
+                  13:00
+                </div>
+              </div>
+              <div class="lock-btn" id="lock-btn">
+                <div style="font-size: 15px; transform: translateY(70%)">
+                  Lock screen
+                </div>
+                <div
+                  class="wallpaper-preview2"
+                  style="
+                    color: #ffffff;
+                    font-size: 35px;
+                    font-weight: bold;
+                    font-family: 'Abril Fatface', serif;
+                  "
+                  id="lock-screen-preview"
+                >
+                  13:00
+                </div>
+              </div>
+              <div class="finger-btn" id="finger-btn">
+                <div
+                  class="circle"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    transform: translateY(17.5px) translateX(20%);
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#bebaab"
+                  >
+                    <path
+                      d="M481-781q106 0 200 45.5T838-604q7 9 4.5 16t-8.5 12q-6 5-14 4.5t-14-8.5q-55-78-141.5-119.5T481-741q-97 0-182 41.5T158-580q-6 9-14 10t-14-4q-7-5-8.5-12.5T126-602q62-85 155.5-132T481-781Zm0 94q135 0 232 90t97 223q0 50-35.5 83.5T688-257q-51 0-87.5-33.5T564-374q0-33-24.5-55.5T481-452q-34 0-58.5 22.5T398-374q0 97 57.5 162T604-121q9 3 12 10t1 15q-2 7-8 12t-15 3q-104-26-170-103.5T358-374q0-50 36-84t87-34q51 0 87 34t36 84q0 33 25 55.5t59 22.5q34 0 58-22.5t24-55.5q0-116-85-195t-203-79q-118 0-203 79t-85 194q0 24 4.5 60t21.5 84q3 9-.5 16T208-205q-8 3-15.5-.5T182-217q-15-39-21.5-77.5T154-374q0-133 96.5-223T481-687Zm0-192q64 0 125 15.5T724-819q9 5 10.5 12t-1.5 14q-3 7-10 11t-17-1q-53-27-109.5-41.5T481-839q-58 0-114 13.5T260-783q-8 5-16 2.5T232-791q-4-8-2-14.5t10-11.5q56-30 117-46t124-16Zm0 289q93 0 160 62.5T708-374q0 9-5.5 14.5T688-354q-8 0-14-5.5t-6-14.5q0-75-55.5-125.5T481-550q-76 0-130.5 50.5T296-374q0 81 28 137.5T406-123q6 6 6 14t-6 14q-6 6-14 6t-14-6q-59-62-90.5-126.5T256-374q0-91 66-153.5T481-590Zm-1 196q9 0 14.5 6t5.5 14q0 75 54 123t126 48q6 0 17-1t23-3q9-2 15.5 2.5T744-191q2 8-3 14t-13 8q-18 5-31.5 5.5t-16.5.5q-89 0-154.5-60T460-374q0-8 5.5-14t14.5-6Z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="setting-title"
+                  style="
+                    position: absolute;
+                    top: 15px;
+                    left: 50px;
+                    font-size: 15px;
+                  "
+                >
+                  &nbsp; &nbsp;Finger<br />print
+                </div>
+              </div>
+              <div class="finger-btn" id="home-btn" style="top: 365px">
+                <div
+                  class="circle"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    transform: translateY(17.5px) translateX(20%);
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#bebaab"
+                  >
+                    <path
+                      d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="setting-title"
+                  style="
+                    position: absolute;
+                    top: 15px;
+                    left: 55px;
+                    font-size: 15px;
+                  "
+                >
+                  Home<br />&nbsp;screen
+                </div>
+              </div>
+              <div
+                class="app4wallpaper"
+                id="app4wallpaper"
+                style="z-index: 100213923; display: none"
+              >
+                <div class="back-button" id="back_to_setting4">WallPaper</div>
+                <div class="button-row">
+                  <div
+                    class="img-button active"
+                    data-img="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/462489103_1400206661384168_7007140902614083639_n.jpg"
+                  >
+                    <img
+                      src="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/462489103_1400206661384168_7007140902614083639_n.jpg"
+                      alt="1"
+                    />
+                  </div>
+                  <div
+                    class="img-button"
+                    data-img="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/wallpaper_2.png"
+                  >
+                    <img
+                      src="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/wallpaper_2.png"
+                      alt="2"
+                    />
+                  </div>
+                  <div
+                    class="img-button"
+                    data-img="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/wallpaper_3.png"
+                  >
+                    <img
+                      src="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/wallpaper_3.png"
+                      alt="3"
+                    />
+                  </div>
+                  <div class="img-button add-button" id="addBtn">+</div>
+                  <input type="file" accept="image/*" id="fileInput" />
+                </div>
+              </div>
+              <div
+                class="app4aod"
+                id="app4aod"
+                style="z-index: 1002133; display: none"
+              >
+                <div class="back-button" id="back_to_setting5">
+                  Always on display
+                </div>
+                <div class="setting-item" id="setting-item-aod">
+                  <div class="setting-title">Always on display</div>
+                  <div
+                    class="toggle-switch active"
+                    id="Alway-on-displays"
+                    data-key="Alway-on-displays"
+                  ></div>
+                </div>
+                <div
+                  class="setting-item"
+                  id="setting-item-hide-wall"
+                  style="top: 160px"
+                >
+                  <div class="setting-title">Hide wallPaper</div>
+                  <div
+                    class="toggle-switch"
+                    id="Hide-wallPaper"
+                    data-key="Hide-wallPaper"
+                  ></div>
+                </div>
+              </div>
+              <div
+                class="app4lock"
+                id="app4lock"
+                style="z-index: 1002133; display: none"
+              >
+                <div
+                  class="back-button"
+                  id="back_to_setting6"
+                  style="color: #ffffff"
+                >
+                  Save
+                </div>
+                <button class="wallpaper-btn-2">Wallpaper</button>
+                <div class="clock-display" id="clock_preview">13:00</div>
+                <div
+                  class="date-display"
+                  id="dateTextPreview"
+                  style="color: #ffffff; transition: all 0.2s"
+                ></div>
+                <div class="wallpaper2" id="wallpaper2"></div>
+                <div class="controls">
+                  <div class="top-buttons">
+                    <button
+                      id="btn1"
+                      style="
+                        border: 2px solid aqua;
+                        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+                      "
+                    >
+                      Style 1
+                    </button>
+                    <button id="btn2">Style 2</button>
+                  </div>
+                  <div class="control-group">
+                    <label>Font color</label>
+                    <div class="color-bar">
+                      <div
+                        class="color-circle"
+                        style="background: #ffffff"
+                        data-color="#ffffff"
+                      ></div>
+                      <div
+                        class="color-circle"
+                        style="background: #1d1d1d"
+                        data-color="#1d1d1d"
+                      ></div>
+                      <div
+                        class="color-circle"
+                        style="background: #5caeff"
+                        data-color="#5caeff"
+                      ></div>
+                      <div
+                        class="color-circle"
+                        style="background: #2ed573"
+                        data-color="#2ed573"
+                      ></div>
+                      <div
+                        class="color-circle"
+                        style="background: #ffa502"
+                        data-color="#ffa502"
+                      ></div>
+                      <div class="color-circle add-color" id="customColor">
+                        +
+                      </div>
+                      <input type="color" id="colorPicker" />
+                    </div>
+                  </div>
+                  <!-- Kéo chỉnh kích cỡ -->
+                  <div class="control-group">
+                    <label>Font size</label>
+                    <input
+                      type="range"
+                      id="sizeSlider"
+                      min="90"
+                      max="110"
+                      value="100"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="app4home"
+                id="app4home"
+                style="z-index: 1002133; display: none"
+              >
+                <div class="back-button" id="back_to_setting8">Home screen</div>
+                <div class="settings-box">
+                  <div class="box-title">Size icon:</div>
+                  <div class="button-container">
+                    <button class="scale-button" data-scale="80">80%</button>
+                    <button class="scale-button" data-scale="90">100%</button>
+                    <button class="scale-button active" data-scale="100">
+                      120%
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="setting-item"
+                  style="top: 35%"
+                  id="setting-item-aod"
+                >
+                  <div class="setting-title">Dock bar</div>
+                  <div
+                    class="toggle-switch active"
+                    id="dock-bar"
+                    data-key="dock-bar"
+                  ></div>
+                </div>
+
+                <div
+                  class="setting-item"
+                  style="top: calc(35% + 60px)"
+                  id="setting-item-aod"
+                >
+                  <div class="setting-title">Dark mode</div>
+                  <div
+                    class="toggle-switch"
+                    id="dark-mode"
+                    data-key="dark-mode"
+                  ></div>
+                  <div
+                    class="setting-item"
+                    style="top: calc(35% + 43px); left: 0%"
+                  >
+                    <div class="setting-title">&nbsp;</div>
+                    <div class="left-text">Icon packs</div>
+                    <div class="left-text-small">Comming soon</div>
+                    <div
+                      class="toggle-switch"
+                      id="none"
+                      style="opacity: 0"
+                    ></div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="#000000"
+                    >
+                      <path
+                        d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div class="footer-text">
+                  Note: Don't use dark mode of your browser
+                </div>
+              </div>
+
+              <div class="app4finger" id="app4finger">
+                <div class="back-button" id="back_to_setting9">
+                  Finger print
+                </div>
+                <div class="half-border-box">
+                  <img
+                    src="https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/finger_print.png"
+                    class="fingerprint_preview"
+                    id="fingerprint_preview"
+                    alt="Vân tay"
+                  />
+                </div>
+                <div class="button-group-finger">
+                  <button class="button-finger" id="btn-white">White</button>
+                  <button class="button-finger" id="btn-blue">Blue</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box5" id="box5">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app5" id="app5">none</div>
+        </div>
+        <div class="box6" id="box6">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app6" id="app6">none</div>
+        </div>
+        <div class="box7" id="box7">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app7" id="app7">none</div>
+        </div>
+        <div class="box8" id="box8">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app8" id="app8">
+            <div class="container_phone">
+              <div class="display_phone" id="display_phone"></div>
+              <div class="keypad_phone">
+                <button class="btn_phone" onclick="append_phone('1')">
+                  1 <span>&nbsp;</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('2')">
+                  2 <span>ABC</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('3')">
+                  3 <span>DEF</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('4')">
+                  4 <span>GHI</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('5')">
+                  5 <span>JKL</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('6')">
+                  6 <span>MNO</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('7')">
+                  7 <span>PQRS</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('8')">
+                  8 <span>TUV</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('9')">
+                  9 <span>WXYZ</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('*')">*</button>
+                <button class="btn_phone" onclick="append_phone('0')">
+                  0 <span>+</span>
+                </button>
+                <button class="btn_phone" onclick="append_phone('#')">#</button>
+              </div>
+              <div style="display: flex; gap: 20px">
+                <button class="btn_phone delbtn_phone"></button>
+                <button class="btn_phone callbtn_phone" onclick="call_phone()">
+                  <div
+                    class="navicon_phone"
+                    style="
+                      background: url('https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/phone.jpg')
+                        no-repeat center;
+                      background-size: contain;
+                      filter: invert(1);
+                      margin-left: 23%;
+                      margin-top: 10%;
+                      width: 30px;
+                      height: 30px;
+                    "
+                  ></div>
+                </button>
+                <button
+                  class="btn_phone delbtn_phone"
+                  onclick="backspace_phone()"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#bebaab"
+                  >
+                    <path
+                      d="m456-320 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 160q-19 0-36-8.5T296-192L80-480l216-288q11-15 28-23.5t36-8.5h440q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H360Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="navbar_phone">
+              <div class="navitem_phone active">
+                <div
+                  class="navicon_phone"
+                  style="
+                    background: url('https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/phone.jpg')
+                      no-repeat center;
+                    background-size: contain;
+                    filter: invert(0.3);
+                  "
+                ></div>
+                Dialer
+              </div>
+              <div class="navitem_phone">
+                <div
+                  class="navicon_phone"
+                  style="
+                    background: url('https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/contact.png')
+                      no-repeat center;
+                    background-size: contain;
+                    filter: invert(0.3);
+                  "
+                ></div>
+                Contacts
+              </div>
+              <div class="navitem_phone">
+                <div
+                  class="navicon_phone"
+                  style="
+                    background: url('https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/star.png')
+                      no-repeat center;
+                    background-size: contain;
+                    filter: brightness(0.4);
+                  "
+                ></div>
+                Favorites
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box9" id="box9">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app9" id="app9">none</div>
+        </div>
+        <div class="box10" id="box10">
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app10" id="app10">none</div>
+        </div>
+        <div class="box11" id="box11">
+          <div class="status-time-widget" id="lockclock3">
+            <div class="date-display" id="dateText3"></div>
+          </div>
+          <div class="nav" style="background: #1f1f1f"></div>
+          <div class="app11" id="app11"></div>
+        </div>
+      </div>
+      <div class="wallpaper"></div>
+      <div class="clicke1" id="clickableBox1"></div>
+      <div class="clicke2" id="clickableBox2"></div>
+      <div class="clicke3" id="clickableBox3"></div>
+      <div class="clicke4" id="clickableBox4"></div>
+      <div class="clicke5" id="clickableBox5"></div>
+      <div class="clicke6" id="clickableBox6"></div>
+      <div class="clicke7" id="clickableBox7"></div>
+      <div class="clicke8" id="clickableBox8"></div>
+      <div class="clicke9" id="clickableBox9"></div>
+      <div class="clicke10" id="clickableBox10"></div>
+      <div class="clicke11" id="clickableBox11"></div>
+      <div class="clicke12" id="clickableBox12"></div>
+      <div class="clicke13" id="clickableBox13"></div>
+      <!-- Màn hình khóa -->
+      <div
+        id="lottie"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 270px;
+          height: 270px;
+          transform: translateX(14%) translateY(170%);
+          pointer-events: none;
+          scale: 0.9;
+          z-index: 1123;
+        "
+      ></div>
+      <div class="lockscreen" id="lockscreen">
+        <div class="lock-content">
+          <div class="lock-clock" id="lockclock"></div>
+          <div class="date-display" id="dateText"></div>
+        </div>
+        <div class="lock-fingerprint" id="unlock-btn" style="z-index: -1">
+          <div
+            class="lock-fingerprint"
+            id="unlock-btn2"
+            style="
+              position: absolute;
+              bottom: -145px;
+              width: 360px;
+              height: 360px;
+              pointer-events: none;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="power-button" title="power-button"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+    <script>
+      const dateElement = document.getElementById("dateText");
+      const dateElement2 = document.getElementById("dateText2");
+
+      const now = new Date();
+      const options = { weekday: "short", month: "short", day: "numeric" };
+      const formatted = now.toLocaleDateString("en-US", options);
+
+      dateElement.textContent = formatted;
+      dateElement2.textContent = formatted;
+      document.getElementById("dateText3").textContent = formatted;
+      document.getElementById("dateTextPreview").textContent = formatted;
+
+      function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        document.getElementById(
+          "lockclock"
+        ).textContent = `${hours}:${minutes}`;
+        document.getElementById(
+          "lockclock2"
+        ).textContent = `${hours}:${minutes}`;
+        document.getElementById(
+          "lockclock3"
+        ).textContent = `${hours}:${minutes}`;
+      }
+      function updateTime2() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        document.getElementById(
+          "clock-aod-preview"
+        ).textContent = `${hours}:${minutes}`;
+        document.getElementById(
+          "lock-screen-preview"
+        ).textContent = `${hours}:${minutes}`;
+        document.getElementById(
+          "clock_preview"
+        ).textContent = `${hours}:${minutes}`;
+      }
+
+      updateTime();
+      setInterval(updateTime, 10000);
+
+      const boxes = {
+        box1: document.getElementById("box1"),
+        box2: document.getElementById("box2"),
+        box3: document.getElementById("box3"),
+        box4: document.getElementById("box4"),
+        box5: document.getElementById("box5"),
+        box6: document.getElementById("box6"),
+        box7: document.getElementById("box7"),
+        box8: document.getElementById("box8"),
+        box9: document.getElementById("box9"),
+        box10: document.getElementById("box10"),
+        box11: document.getElementById("box11"),
+        box12: document.getElementById("box12"),
+        box13: document.getElementById("box13"),
+      };
+
+      boxes[`box1`].classList.add("lock");
+      boxes[`box2`].classList.add("lock");
+      boxes[`box3`].classList.add("lock");
+      boxes[`box4`].classList.add("lock");
+      boxes[`box5`].classList.add("lock");
+      boxes[`box6`].classList.add("lock");
+      boxes[`box7`].classList.add("lock");
+      boxes[`box8`].classList.add("lock");
+      boxes[`box9`].classList.add("lock");
+      boxes[`box10`].classList.add("lock");
+      boxes[`box11`].classList.add("lock");
+      document.querySelector(".khayapp").classList.add("lock");
+
+      const appopen = {
+        box1: document.getElementById("app1"),
+        box2: document.getElementById("app2"),
+        box3: document.getElementById("app3"),
+        box4: document.getElementById("app4main"),
+        box5: document.getElementById("app5"),
+        box6: document.getElementById("app6"),
+        box7: document.getElementById("app7"),
+        box8: document.getElementById("app8"),
+        box9: document.getElementById("app9"),
+        box10: document.getElementById("app10"),
+        box11: document.getElementById("app11"),
+        box12: document.getElementById("app12"),
+        box13: document.getElementById("app13"),
+      };
+
+      const clickables = {
+        box1: document.getElementById("clickableBox1"),
+        box2: document.getElementById("clickableBox2"),
+        box3: document.getElementById("clickableBox3"),
+        box4: document.getElementById("clickableBox4"),
+        box5: document.getElementById("clickableBox5"),
+        box6: document.getElementById("clickableBox6"),
+        box7: document.getElementById("clickableBox7"),
+        box8: document.getElementById("clickableBox8"),
+        box9: document.getElementById("clickableBox9"),
+        box10: document.getElementById("clickableBox10"),
+        box11: document.getElementById("clickableBox11"),
+        box12: document.getElementById("clickableBox12"),
+        box13: document.getElementById("clickableBox13"),
+      };
+
+      const thanh = document.getElementById("thanh");
+      const WallPaper = document.querySelector(".wallpaper");
+      const allApp = document.getElementById("allApp");
+      const lp = document.getElementById("lp");
+
+      let currentOpeningBtn = null;
+      let nav = null;
+      let isMo = false;
+      let autoHideClickablesTimer = null;
+      let closing = false;
+      let app = null;
+      let currentSpeed = 1;
+      let currentSpeed5 = 0.5 * currentSpeed;
+      let currentSpeed4 = 0.4 * currentSpeed;
+      let currentSpeed3 = 0.3 * currentSpeed;
+
+      function hideAllClickables() {
+        Object.values(clickables).forEach((el) => {
+          el.style.display = "none";
+        });
+      }
+
+      function openPopupFromCurrentButton() {
+        if (!currentOpeningBtn) return;
+        thanh.classList.add("open");
+        if (app) app.classList.add("open");
+        currentOpeningBtn.style.transition = `all ${currentSpeed5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        if (scale < 1)
+          currentOpeningBtn.style.transition = `all ${currentSpeed4}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        if (scale < 0.7)
+          currentOpeningBtn.style.transition = `all calc(0.3s * ${currentSpeed}) cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        allApp.style.transition =
+          wallpaper.style.transition = `all calc(0.5s * ${currentSpeed}) cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
+
+        wallpaper.style.filter = "blur(5px)";
+        wallpaper.style.scale = `110%`;
+
+        currentOpeningBtn.classList.add("open");
+        currentOpeningBtn.classList.add("hien");
+        currentOpeningBtn.style.scale = "100%";
+        currentOpeningBtn.style.zIndex = "320";
+
+        lp.style.transition = `all ${currentSpeed3}s cubic-bezier(0.2, 0.2, 0.12, 1)`;
+        lp.classList.add("open");
+
+        setTimeout(() => {
+          currentOpeningBtn.style.transform = `translateX(0%) translateY(0%) scale(1.074)`;
+        }, 50);
+
+        clearTimeout(hide_app);
+        app.style.display = "flex";
+        allApp.classList.add("open");
+
+        const boxId = Object.keys(boxes).find(
+          (key) => boxes[key] === currentOpeningBtn
+        );
+        if (boxId) clickables[boxId].style.display = "none";
+
+        nav = currentOpeningBtn.querySelector(".nav");
+        if (nav) {
+          nav.style.transition = `all ${currentSpeed3}s`;
+          nav.classList.add("open");
+        }
+
+        isMo = true;
+      }
+
+      const scale = 1;
+      let hide_app = null;
+      function closePopup() {
+        if (!currentOpeningBtn) return;
+        app.classList.remove("open");
+        currentOpeningBtn.style.transition = `all ${currentSpeed4}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        clearTimeout(autoHideClickablesTimer);
+        closing = true;
+        setTimeout(() => {
+          closing = false;
+        }, 300);
+        currentOpeningBtn.classList.remove("open");
+        currentOpeningBtn.style.scale = `${scale_icon}%`;
+
+        allApp.style.transition =
+          wallpaper.style.transition = `all ${currentSpeed5}s`;
+        wallpaper.style.filter = "blur(0px)";
+        wallpaper.style.scale = `100%`;
+        currentOpeningBtn.style.zIndex = "5";
+
+        thanh.style.transform = "translateX(-50%)";
+        thanh.classList.remove("open");
+        lp.classList.remove("open");
+
+        hide_app = setTimeout(() => {
+          app.style.display = "none";
+        }, currentSpeed5 * 1000);
+
+        allApp.classList.remove("open");
+
+        if (nav) {
+          nav.style.transition = `all ${currentSpeed3}s`;
+          nav.classList.remove("open");
+        }
+        isMo = false;
+
+        Object.values(clickables).forEach((el) => {
+          el.style.display = "block";
+        });
+        currentOpeningBtn.style.transform = `translateX(0%) translateY(0%) scale(1)`;
+        currentOpeningBtn.classList.remove("hien");
+        currentOpeningBtn = null;
+        scale = 1;
+      }
+
+      function updateTransform(y, x) {
+        if (y < 0) y = 0;
+        if (y > 170) y = 170;
+
+        const easedY = Math.sqrt(y);
+        const maxEasedY = Math.sqrt(550);
+        const ratio = easedY / maxEasedY;
+        const displayY = ratio * 170;
+        if (displayY > 100) displayY = 100;
+        const scale = 1 - y / 200 + 0.074;
+
+        currentOpeningBtn.style.transition = `all calc(0.1s)`;
+        currentOpeningBtn.style.transform = `translateX(${x}px) translateY(${-displayY}px) scale(${scale})`;
+
+        thanh.style.transition = "none";
+        thanh.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${-y}px)`;
+      }
+
+      function resetpop() {
+        thanh.classList.add("open");
+        currentOpeningBtn.style.transition = `all ${currentSpeed3}s`;
+        currentOpeningBtn.style.transform = `translateX(0%) translateY(0%) scale(1.074)`;
+        thanh.style.transform = `translateX(-50%) translateY(0%) scale(1)`;
+      }
+
+      let startY = 0;
+      let startX = 0;
+      let deltaY = 0;
+      let deltaX = 0;
+      let dragging = false;
+
+      thanh.addEventListener("touchstart", (e) => {
+        if (!isMo) return;
+        startY = e.touches[0].clientY;
+        startX = e.touches[0].clientX;
+
+        deltaY = 0;
+        deltaX = 0;
+
+        if (currentOpeningBtn === boxes["box4"]) {
+          app4.classList.remove("open");
+          theme_option.style.pointerEvents = "auto";
+          animationInSetting.style.pointerEvents = "auto";
+          credits.style.display = "none";
+          app4_vesion.style.display = "none";
+          credits.classList.remove("open");
+          app4animation.classList.remove("open");
+          document.getElementById("scaling-box").style.animation = "none";
+
+          AboutInSetting.style.pointerEvents = "auto";
+          theme_option.style.pointerEvents = "auto";
+          app4_theme.classList.remove("open");
+          AboutInSetting.style.pointerEvents = "auto";
+          animationInSetting.style.pointerEvents = "auto";
+
+          app4_home.style.display = "none";
+          wallpaper_option.style.display = "none";
+          aod_option.style.display = "none";
+          lock_option.style.display = "none";
+          wallpaper_option.classList.remove("open");
+          aod_option.classList.remove("open");
+          lock_option.classList.remove("open");
+          app4_home.classList.remove("open");
+          app4_finger.classList.remove("open");
+          app4_vesion.classList.remove("open");
+        }
+      });
+
+      thanh.addEventListener(
+        "touchmove",
+        (e) => {
+          e.preventDefault();
+          if (!isMo) return;
+          deltaY = startY - e.touches[0].clientY;
+          deltaX = e.touches[0].clientX - startX;
+          updateTransform(deltaY, deltaX);
+        },
+        {
+          passive: false,
+        }
+      );
+
+      thanh.addEventListener("touchend", () => {
+        if (deltaY > 40) closePopup();
+        else resetpop();
+        deltaY = 0;
+        deltaX = 0;
+      });
+
+      thanh.addEventListener("mousedown", (e) => {
+        deltaY = 0;
+        deltaX = 0;
+        startY = 0;
+        startX = 0;
+
+        if (!isMo) return;
+        dragging = true;
+        startY = e.clientY;
+        startX = e.clientX;
+
+        if (currentOpeningBtn === boxes["box4"]) {
+          app4.classList.remove("open");
+          theme_option.style.pointerEvents = "auto";
+          animationInSetting.style.pointerEvents = "auto";
+          credits.style.display = "none";
+          app4_vesion.style.display = "none";
+          credits.classList.remove("open");
+          app4animation.classList.remove("open");
+          document.getElementById("scaling-box").style.animation = "none";
+
+          AboutInSetting.style.pointerEvents = "auto";
+          theme_option.style.pointerEvents = "auto";
+          app4_theme.classList.remove("open");
+          AboutInSetting.style.pointerEvents = "auto";
+          animationInSetting.style.pointerEvents = "auto";
+
+          app4_home.style.display = "none";
+          wallpaper_option.style.display = "none";
+          aod_option.style.display = "none";
+          lock_option.style.display = "none";
+          wallpaper_option.classList.remove("open");
+          aod_option.classList.remove("open");
+          lock_option.classList.remove("open");
+          app4_home.classList.remove("open");
+          app4_finger.classList.remove("open");
+          app4_vesion.classList.remove("open");
+        }
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!dragging || !isMo) return;
+        deltaY = startY - e.clientY;
+        deltaX = e.clientX - startX;
+        updateTransform(deltaY, deltaX);
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!dragging || !isMo) return;
+        dragging = false;
+        if (deltaY > 40) closePopup();
+        else resetpop();
+      });
+
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+      ].forEach((num) => {
+        document
+          .getElementById(`clickableBox${num}`)
+          .addEventListener("click", () => {
+            clearTimeout(autoHideClickablesTimer);
+            if (currentOpeningBtn) {
+              currentOpeningBtn.style.transition = `all ${currentSpeed5} cubic-bezier(.17,.75,.15,.89)`;
+              currentOpeningBtn.classList.remove("open");
+              currentOpeningBtn.classList.remove("hien");
+              currentOpeningBtn.style.scale = `${scale_icon}%`;
+
+              Object.values(clickables).forEach((el) => {
+                el.style.display = "block";
+              });
+
+              app.style.display = "none";
+              app.classList.remove("open");
+              app = appopen[`box${num}`];
+
+              //lp.style.transition = "all 0.15s";
+              //lp.classList.remove("open");
+
+              if (nav) nav.classList.remove("open");
+
+              currentOpeningBtn.style.transform = `scale(1)`;
+              currentOpeningBtn.style.zIndex = "12";
+
+              //lp.style.transition = "all 0.3s";
+              //WallPaper.classList.remove("open");
+
+              currentOpeningBtn = boxes[`box${num}`];
+
+              openPopupFromCurrentButton();
+              autoHideClickablesTimer = setTimeout(() => {
+                if (isMo) hideAllClickables();
+              }, 400 * currentSpeed);
+            } else {
+              currentOpeningBtn = boxes[`box${num}`];
+              currentOpeningBtn.style.transition = `all calc(0.5s * ${currentSpeed}) cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+              app = appopen[`box${num}`];
+              app.style.display = "none";
+              openPopupFromCurrentButton();
+              autoHideClickablesTimer = setTimeout(() => {
+                if (isMo) hideAllClickables();
+              }, 400 * currentSpeed);
+            }
+          });
+      });
+
+      // DOM elements
+      const lockscreen = document.getElementById("lockscreen");
+      const wallpaper = document.querySelector(".wallpaper");
+      const unlockBtn = document.getElementById("unlock-btn");
+      const powerbtn = document.querySelector(".power-button");
+      const fingerprint = document.querySelector(".lock-fingerprint");
+      const lockclock = document.querySelector(".lock-clock");
+      const dateText = document.getElementById("dateText");
+      const clock = document.getElementById("lockclock2");
+      const battery3 = document.querySelector(".battery-num");
+      const battery2 = document.querySelector(".battery-small");
+      const battery1 = document.querySelector(".status-battery");
+      const phone = document.querySelector(".phone");
+
+      let ison = true;
+      let islock = true;
+      allApp.style.transition = "all 0s";
+      allApp.classList.add("lock");
+      hideAllClickables();
+
+      //lock();
+      clock.classList.add("hien");
+      let wallpaper_lock_off_height = 50; //%
+      let wallpaper_lock_off_scale = 40; //%
+      let wallpaper_lock_off_borderRadius = 0; //px
+      let wallpaper_lock_off_opacity = 1;
+      let wallpaper_lock_off_transform = "translateY(0px)";
+
+      let wallpaper_lock_height = 70; //%
+      let wallpaper_lock_scale = 80; //%
+      let wallpaper_lock_borderRadius = 20; //px
+      let wallpaper_lock_opacity = 1;
+      let wallpaper_lock_transform = "translateY(250px)";
+
+      let lockscreen_style_opacity = 1;
+
+      function lock() {
+        if (!islock) {
+          finger_print.stop();
+          finger_print.play();
+        }
+        islock = true;
+        dongnotification();
+
+        lockscreen.style.transition = "all 0.3s";
+        lockscreen.style.opacity = lockscreen_style_opacity;
+        lockscreen.style.pointerEvents = "auto";
+        lockscreen.style.scale = 1;
+
+        //wallpaper.classList.add("open");
+
+        allApp.style.transition = "all 0s";
+        allApp.classList.add("lock");
+
+        hideAllClickables();
+        clock.classList.remove("hien");
+        document.querySelector(
+          ".khayapp"
+        ).style.transition = `all 0s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        document.querySelector(".khayapp").classList.add("lock");
+
+        boxes["box1"].style.transform =
+          "translateX(-40px) translateY(250px) scale(1.4)";
+        boxes["box1"].style.opacity = "0.2";
+        boxes["box1"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box2"].style.transform =
+          "translateX(-13px) translateY(250px) scale(1.4)";
+        boxes["box2"].style.opacity = "0.2";
+        boxes["box2"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box3"].style.transform =
+          "translateX(13px) translateY(250px) scale(1.4)";
+        boxes["box3"].style.opacity = "0.2";
+        boxes["box3"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box4"].style.transform =
+          "translateX(40px) translateY(250px) scale(1.4)";
+        boxes["box4"].style.opacity = "0.2";
+        boxes["box4"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box5"].style.transform =
+          "translateX(100px) translateY(190px) scale(1.5)";
+        boxes["box5"].style.opacity = "0.2";
+        boxes["box5"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box6"].style.transform =
+          "translateX(40px) translateY(170px) scale(1.3)";
+        boxes["box6"].style.opacity = "0.2";
+        boxes["box6"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box7"].style.transform =
+          "translateX(-40px) translateY(170px) scale(1.3)";
+        boxes["box7"].style.opacity = "0.2";
+        boxes["box7"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box8"].style.transform =
+          "translateX(-100px) translateY(190px) scale(1.5)";
+        boxes["box8"].style.opacity = "0.2";
+        boxes["box8"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box9"].style.transform =
+          "translateX(-70px) translateY(20px) scale(1.7)";
+        boxes["box9"].style.opacity = "0.2";
+        boxes["box9"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box10"].style.transform =
+          "translateX(70px) translateY(20px) scale(1.7)";
+        boxes["box10"].style.opacity = "0.2";
+        boxes["box10"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+
+        boxes["box11"].style.transform =
+          "translateX(0px) translateY(-200px) scale(1.4)";
+        boxes["box11"].style.opacity = "0.2";
+        boxes["box11"].style.transition = "all 0s cubic-bezier(.07,1.33,1,1)";
+      }
+
+      function unlock() {
+        animation.stop();
+        animation.play();
+        islock = false;
+        ison = true;
+
+        phone.style.background = phone_lock_background;
+        lockscreen.style.opacity = 0;
+        lockscreen.style.transition = "none";
+        lockscreen.style.scale = 0.9;
+        lockscreen.style.pointerEvents = "none";
+
+        wallpaper.style.height = "100%";
+        wallpaper.style.scale = "100%";
+        wallpaper.style.borderRadius = "50px";
+        wallpaper.style.opacity = 1;
+        wallpaper.style.transform = "translateY(0px)";
+
+        lockclock.style.transform = "none";
+        lockclock.style.filter = "brightness(1)";
+        dateText.style.filter = "brightness(1)";
+        dateText.style.transform =
+          "translateY(0px) translateX(-50%) scale(0.95)";
+
+        allApp.style.transition = `all calc(0.85s * ${currentSpeed}) cubic-bezier(.19,1.5,.47,1)`;
+        allApp.classList.remove("lock");
+
+        battery2.classList.remove("close");
+        battery1.classList.remove("close");
+        battery3.classList.remove("close");
+        battery3.style.opacity =
+          battery2.style.opacity =
+          battery1.style.opacity =
+            1;
+
+        clock.classList.add("hien");
+
+        powerbtn.classList.add("hidden");
+        setTimeout(() => {
+          Object.values(clickables).forEach((el) => {
+            el.style.display = "flex";
+          });
+          powerbtn.classList.remove("hidden");
+        }, 440);
+
+        setTimeout(() => {
+          boxes["box11"].style.transform =
+            "translateX(0px) translateY(0px) scale(1)";
+          boxes["box11"].style.opacity = "1";
+          boxes[
+            "box11"
+          ].style.transition = `all ${currentSpeed3}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+          setTimeout(() => {
+            boxes["box9"].style.transform =
+              "translateX(0px) translateY(0px) scale(1)";
+            boxes["box9"].style.opacity = "1";
+            boxes[
+              "box9"
+            ].style.transition = `all calc(0.35s * ${currentSpeed}) cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+            boxes["box10"].style.transform =
+              "translateX(0px) translateY(0px) scale(1)";
+            boxes["box10"].style.opacity = "1";
+            boxes[
+              "box10"
+            ].style.transition = `all calc(0.35s * ${currentSpeed}) cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+            setTimeout(() => {
+              boxes["box6"].style.transform =
+                "translateX(0px) translateY(0px) scale(1)";
+              boxes["box6"].style.opacity = "1";
+              boxes[
+                "box6"
+              ].style.transition = `all ${currentSpeed4}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+
+              boxes["box7"].style.transform =
+                "translateX(0px) translateY(0px) scale(1)";
+              boxes["box7"].style.opacity = "1";
+              boxes[
+                "box7"
+              ].style.transition = `all ${currentSpeed4}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+              setTimeout(() => {
+                boxes["box5"].style.transform =
+                  "translateX(0px) translateY(0px) scale(1)";
+                boxes["box5"].style.opacity = "1";
+                boxes[
+                  "box5"
+                ].style.transition = `all calc(0.45s * ${currentSpeed}) cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                boxes["box8"].style.transform =
+                  "translateX(0px) translateY(0px) scale(1)";
+                boxes["box8"].style.opacity = "1";
+                boxes[
+                  "box8"
+                ].style.transition = `all calc(0.45s * ${currentSpeed}) cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                setTimeout(() => {
+                  boxes[`box1`].style.transform =
+                    "translateX(0px) translateY(0px) scale(1)";
+                  boxes[`box1`].style.opacity = "1";
+                  boxes[
+                    `box1`
+                  ].style.transition = `all ${currentSpeed5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+
+                  boxes[`box2`].style.transform =
+                    "translateX(0px) translateY(0px) scale(1)";
+                  boxes[`box2`].style.opacity = "1";
+                  boxes[
+                    `box2`
+                  ].style.transition = `all ${currentSpeed5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+
+                  boxes[`box3`].style.transform =
+                    "translateX(0px) translateY(0px) scale(1)";
+                  boxes[`box3`].style.opacity = "1";
+                  boxes[
+                    `box3`
+                  ].style.transition = `all ${currentSpeed5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+
+                  boxes[`box4`].style.transform =
+                    "translateX(0px) translateY(0px) scale(1)";
+                  boxes[`box4`].style.opacity = "1";
+                  boxes[
+                    `box4`
+                  ].style.transition = `all ${currentSpeed5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                  document.querySelector(
+                    ".khayapp"
+                  ).style.transition = `all ${currentSpeed5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                  document.querySelector(".khayapp").classList.remove("lock");
+                }, 30);
+              }, 30);
+            }, 30);
+          }, 30);
+        }, 0);
+      }
+
+      unlockBtn.addEventListener("touchstart", () => {
+        unlock();
+      });
+      unlockBtn.addEventListener("mousedown", () => {
+        unlock();
+      });
+
+      let phone_lock_off_background = "#000000";
+      let phone_lock_background =
+        "linear-gradient(to bottom, rgb(0, 53, 53), rgb(0, 141, 141))";
+      wallpaper.style.height = `${wallpaper_lock_height}%`;
+      wallpaper.style.scale = `${wallpaper_lock_scale}%`;
+      wallpaper.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+      wallpaper.style.opacity = 1;
+
+      let lockclock_style_transform = "scale(0.95) translateY(160px)";
+      let dateText_style_transform =
+        "translateY(150px) translateX(-50%) scale(0.95)";
+
+      wallpaper.style.transform = "translateY(250px)";
+      phone.style.background = phone_lock_background;
+      powerbtn.addEventListener("click", () => {
+        lock();
+        if (ison) {
+          battery3.style.transition =
+            battery2.style.transition =
+            battery1.style.transition =
+            dateText.style.transition =
+            lockclock.style.transition =
+            wallpaper.style.transition =
+              `all calc(0.5s * ${currentSpeed}) cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
+
+          battery3.style.opacity =
+            battery2.style.opacity =
+            battery1.style.opacity =
+            lockscreen.style.opacity =
+              lockscreen_style_opacity;
+
+          wallpaper.style.transition =
+            "all 0.4s cubic-bezier(0.23, 0.55, 0.54, 0.97)";
+          wallpaper.style.filter = "blur(0px)";
+          wallpaper.style.height = `${wallpaper_lock_off_height}%`;
+          wallpaper.style.scale = `${wallpaper_lock_off_scale}%`;
+          wallpaper.style.borderRadius = `${wallpaper_lock_off_borderRadius}px`;
+          wallpaper.style.opacity = `${wallpaper_lock_off_opacity}`;
+
+          wallpaper.style.transform = wallpaper_lock_off_transform;
+          phone.style.background = phone_lock_off_background;
+
+          ison = false;
+          lockclock.style.transform = lockclock_style_transform;
+          lockclock.style.filter = "brightness(3)";
+          dateText.style.transform = dateText_style_transform;
+          dateText.style.filter = "brightness(3)";
+
+          battery2.classList.add("close");
+          battery1.classList.add("close");
+          battery3.classList.add("close");
+          thanhS1.style.pointerEvents = "none";
+          closePopup_noanim();
+        } else {
+          battery3.style.opacity =
+            battery2.style.opacity =
+            battery1.style.opacity =
+            lockscreen.style.opacity =
+              1;
+
+          wallpaper.style.transition =
+            "all 0.4s cubic-bezier(0.23, 0.55, 0.54, 0.97)";
+          wallpaper.style.height = `${wallpaper_lock_height}%`;
+          wallpaper.style.scale = `${wallpaper_lock_scale}%`;
+          wallpaper.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+          wallpaper.style.opacity = 1;
+
+          wallpaper.style.transform = wallpaper_lock_transform;
+          phone.style.background = phone_lock_background;
+
+          ison = true;
+          lockclock.style.transform = "none";
+          lockclock.style.filter = "brightness(1)";
+          dateText.style.filter = "brightness(1)";
+          dateText.style.transform =
+            "translateY(0px) translateX(-50%) scale(0.95)";
+
+          battery2.classList.remove("close");
+          battery1.classList.remove("close");
+          battery3.classList.remove("close");
+          thanhS1.style.pointerEvents = "auto";
+        }
+      });
+
+      lockscreen.addEventListener("click", () => {
+        battery3.style.opacity =
+          battery2.style.opacity =
+          battery1.style.opacity =
+          lockscreen.style.opacity =
+            1;
+        battery2.classList.remove("close");
+        battery1.classList.remove("close");
+        battery3.classList.remove("close");
+
+        wallpaper.style.height = `${wallpaper_lock_height}%`;
+        wallpaper.style.scale = `${wallpaper_lock_scale}%`;
+        wallpaper.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+        wallpaper.style.opacity = 1;
+
+        wallpaper.style.transform = wallpaper_lock_transform;
+        phone.style.background = phone_lock_background;
+
+        ison = true;
+        lockclock.style.transform = "none";
+        lockclock.style.filter = "brightness(1)";
+        dateText.style.filter = "brightness(1)";
+        dateText.style.transform =
+          "translateY(0px) translateX(-50%) scale(0.95)";
+        thanhS1.style.pointerEvents = "auto";
+      });
+
+      // in setting
+      let duration = 1.7 * currentSpeed;
+
+      const AboutInSetting = document.getElementById("about_setting");
+      const animationInSetting = document.getElementById("animation_setting");
+      const app4animation = document.getElementById("app4animation");
+      const khaysetting1_2 = document.getElementById("khaysetting1-2");
+      const credits = document.getElementById("app4credits");
+      const back7 = document.getElementById("back_to_setting7");
+
+      const back = document.getElementById("back_to_setting");
+      const back2 = document.getElementById("back_to_setting2");
+      const selectSpeed = document.querySelector(".select-speed-wrapper");
+
+      const app4 = document.getElementById("app4");
+      const app4main = document.getElementById("app4main");
+
+      const app4_theme = document.getElementById("app4theme");
+      const theme_option = document.getElementById("theme_setting");
+      const back3 = document.getElementById("back_to_setting3");
+
+      const wallpaper_btn = document.getElementById("wallpaper-btn");
+      const wallpaper_option = document.getElementById("app4wallpaper");
+      const back4 = document.getElementById("back_to_setting4");
+
+      const aod_option = document.getElementById("app4aod");
+      const aod_btn = document.getElementById("aod-btn");
+      const back5 = document.getElementById("back_to_setting5");
+
+      const lock_btn = document.getElementById("lock-btn");
+      const back6 = document.getElementById("back_to_setting6");
+      const lock_option = document.getElementById("app4lock");
+      const wallpaper_btn2 = document.querySelector(".wallpaper-btn-2");
+
+      const home_btn = document.getElementById("home-btn");
+      const app4_home = document.getElementById("app4home");
+      const back8 = document.getElementById("back_to_setting8");
+
+      const finger = document.getElementById("finger-btn");
+      const app4_finger = document.getElementById("app4finger");
+      const back9 = document.getElementById("back_to_setting9");
+
+      const vesion_setting = document.querySelector(".khaysetting1-1");
+      const app4_vesion = document.getElementById("app4vesion");
+      const back10 = document.getElementById("back_to_setting10");
+
+      //about option
+      AboutInSetting.addEventListener("click", () => {
+        app4.classList.add("open");
+
+        theme_option.style.pointerEvents = "none";
+        animationInSetting.style.pointerEvents = "none";
+
+        credits.style.display = "flex";
+        app4_vesion.style.display = "flex";
+      });
+      back.addEventListener("click", () => {
+        app4.classList.remove("open");
+
+        theme_option.style.pointerEvents = "auto";
+        animationInSetting.style.pointerEvents = "auto";
+
+        credits.style.display = "none";
+        app4_vesion.style.display = "none";
+      });
+      khaysetting1_2.addEventListener("click", () => {
+        credits.classList.add("open");
+      });
+      back7.addEventListener("click", () => {
+        credits.classList.remove("open");
+      });
+
+      //animation option
+      animationInSetting.addEventListener("click", () => {
+        app4animation.classList.add("open");
+        document.getElementById(
+          "scaling-box"
+        ).style.animation = `scaleUpDown ${duration}s ease-out infinite`;
+
+        AboutInSetting.style.pointerEvents = "none";
+        theme_option.style.pointerEvents = "none";
+      });
+      back2.addEventListener("click", () => {
+        app4animation.classList.remove("open");
+        document.getElementById("scaling-box").style.animation = "none";
+
+        AboutInSetting.style.pointerEvents = "auto";
+        theme_option.style.pointerEvents = "auto";
+      });
+
+      let blur_app = 0;
+      document.getElementById("blurApp").addEventListener("click", function () {
+        this.classList.toggle("active");
+        blur_app = this.classList.contains("active") ? 1 : 0;
+
+        if (blur_app) {
+          lp.style.filter = "blur(10px)";
+        } else {
+          lp.style.filter = "blur(0px)";
+        }
+      });
+
+      //theme option
+      theme_option.addEventListener("click", () => {
+        app4_theme.classList.add("open");
+
+        AboutInSetting.style.pointerEvents = "none";
+        animationInSetting.style.pointerEvents = "none";
+        updateTime2();
+
+        app4_home.style.display = "flex";
+        wallpaper_option.style.display = "flex";
+        aod_option.style.display = "flex";
+        lock_option.style.display = "flex";
+      });
+      back3.addEventListener("click", () => {
+        app4_theme.classList.remove("open");
+        AboutInSetting.style.pointerEvents = "auto";
+        animationInSetting.style.pointerEvents = "auto";
+
+        app4_home.style.display = "none";
+        wallpaper_option.style.display = "none";
+        aod_option.style.display = "none";
+        lock_option.style.display = "none";
+      });
+
+      wallpaper_btn.addEventListener("click", () => {
+        wallpaper_option.classList.add("open");
+      });
+      wallpaper_btn2.addEventListener("click", () => {
+        wallpaper_option.classList.add("open");
+      });
+      back4.addEventListener("click", () => {
+        wallpaper_option.classList.remove("open");
+      });
+
+      const buttons = document.querySelectorAll(".img-button");
+      const wallpaper_preview = document.querySelector(".wallpaper-preview");
+      const wallpaper_preview2 = document.querySelector(".wallpaper-preview2");
+      const addBtn = document.getElementById("addBtn");
+
+      function setActive(btn, imageUrl) {
+        wallpaper.style.backgroundImage = `url(${imageUrl})`;
+        wallpaper_preview.style.backgroundImage = `url(${imageUrl})`;
+        wallpaper_preview2.style.backgroundImage = `url(${imageUrl})`;
+        wallPaper2.style.backgroundImage = `url(${imageUrl})`;
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+
+      buttons.forEach((btn) => {
+        if (btn !== addBtn) {
+          btn.addEventListener("click", () => {
+            const img = btn.getAttribute("data-img");
+            setActive(btn, img);
+          });
+        }
+      });
+
+      addBtn.addEventListener("click", () => {
+        fileInput.value = "";
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const dataUrl = e.target.result;
+            setActive(addBtn, dataUrl);
+            addBtn.setAttribute("data-img", dataUrl);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert("Vui lòng chọn ảnh hợp lệ.");
+        }
+      });
+
+      // Mặc định chọn ảnh đầu tiên
+      buttons[0].click();
+
+      aod_btn.addEventListener("click", () => {
+        aod_option.classList.add("open");
+      });
+      back5.addEventListener("click", () => {
+        aod_option.classList.remove("open");
+      });
+
+      let always_on_displays = 0;
+      document
+        .getElementById("Alway-on-displays")
+        .addEventListener("click", function () {
+          this.classList.toggle("active");
+          always_on_displays = this.classList.contains("active") ? 1 : 0;
+
+          if (always_on_displays) {
+            document.getElementById("setting-item-hide-wall").style.filter =
+              " brightness(1)";
+            document.getElementById(
+              "setting-item-hide-wall"
+            ).style.pointerEvents = "auto";
+
+            lockscreen_style_opacity = 1;
+            hide_wallpaper = 0;
+
+            wallpaper_lock_off_opacity = 1;
+            wallpaper_lock_off_height = 50;
+            wallpaper_lock_off_scale = 40;
+            wallpaper_lock_off_borderRadius = 0;
+            wallpaper_lock_off_transform = "translateY(0px)";
+
+            lockclock_style_transform = "scale(0.95) translateY(160px)";
+            dateText_style_transform =
+              "translateY(150px) translateX(-50%) scale(0.95)";
+          } else {
+            document.getElementById("setting-item-hide-wall").style.filter =
+              " brightness(0.7)";
+            document.getElementById(
+              "setting-item-hide-wall"
+            ).style.pointerEvents = "none";
+
+            document
+              .getElementById("Hide-wallPaper")
+              .classList.remove("active");
+            hide_wallpaper = 1;
+            lockscreen_style_opacity = 0;
+
+            wallpaper_lock_off_opacity = 0;
+            wallpaper_lock_off_height = wallpaper_lock_height;
+            wallpaper_lock_off_scale = wallpaper_lock_scale;
+            wallpaper_lock_off_borderRadius = wallpaper_lock_borderRadius;
+            wallpaper_lock_off_transform = wallpaper_lock_transform;
+
+            dateText_style_transform =
+              "translateX(-50%) scale(0.9) translateY(10px)";
+            lockclock_style_transform = "scale(0.95) translateY(10px)";
+          }
+        });
+
+      let hide_wallpaper = 0;
+      document
+        .getElementById("Hide-wallPaper")
+        .addEventListener("click", function () {
+          this.classList.toggle("active");
+          hide_wallpaper = this.classList.contains("active") ? 1 : 0;
+
+          if (hide_wallpaper) {
+            wallpaper_lock_off_opacity = 0;
+            wallpaper_lock_off_height = wallpaper_lock_height;
+            wallpaper_lock_off_scale = wallpaper_lock_scale;
+            wallpaper_lock_off_borderRadius = wallpaper_lock_borderRadius;
+            wallpaper_lock_off_transform = wallpaper_lock_transform;
+
+            dateText_style_transform =
+              "translateX(-50%) scale(0.9) translateY(10px)";
+            lockclock_style_transform = "scale(0.95) translateY(10px)";
+          } else {
+            wallpaper_lock_off_opacity = 1;
+            wallpaper_lock_off_height = 50;
+            wallpaper_lock_off_scale = 40;
+            wallpaper_lock_off_borderRadius = 0;
+            wallpaper_lock_off_transform = "translateY(0px)";
+
+            lockclock_style_transform = "scale(0.95) translateY(160px)";
+            dateText_style_transform =
+              "translateY(150px) translateX(-50%) scale(0.95)";
+          }
+        });
+
+      //lock screen option
+      lock_btn.addEventListener("click", () => {
+        lock_option.classList.add("open");
+      });
+      back6.addEventListener("click", () => {
+        lock_option.classList.remove("open");
+      });
+      const clock_preview = document.getElementById("clock_preview");
+      const colorCircles = document.querySelectorAll(".color-circle");
+      const customColorBtn = document.getElementById("customColor");
+      const colorPicker = document.getElementById("colorPicker");
+      const sizeSlider = document.getElementById("sizeSlider");
+      const date_preview = document.getElementById("dateTextPreview");
+
+      colorCircles.forEach((circle) => {
+        circle.addEventListener("click", () => {
+          const color = circle.getAttribute("data-color");
+          if (color) {
+            clock_preview.style.color = color;
+            lockclock.style.color = color;
+            dateText.style.color = color;
+            date_preview.style.color = color;
+          }
+        });
+      });
+
+      customColorBtn.addEventListener("click", () => {
+        colorPicker.click();
+      });
+
+      colorPicker.addEventListener("input", () => {
+        clock_preview.style.color = colorPicker.value;
+        lockclock.style.color = colorPicker.value;
+        dateText.style.color = colorPicker.value;
+        date_preview.style.color = colorPicker.value;
+      });
+
+      sizeSlider.addEventListener("input", () => {
+        clock_preview.style.fontSize = `${sizeSlider.value}px`;
+        lockclock.style.fontSize = `${sizeSlider.value}px`;
+        //date_preview.style.fontSize = `calc(${sizeSlider.value}px / 5)`;
+        //dateText.style.fontSize = `calc(${sizeSlider.value}px / 5)`;
+      });
+
+      const wallPaper2 = document.querySelector(".wallpaper2");
+      document.getElementById("btn1").addEventListener("click", () => {
+        wallpaper_lock_height = 70; //%
+        wallpaper_lock_scale = 80; //%
+        wallpaper_lock_borderRadius = 20; //px
+        wallpaper_lock_opacity = 1;
+        wallpaper_lock_transform = "translateY(250px)";
+        document.getElementById("btn1").style.border = "2px solid aqua";
+        document.getElementById("btn1").style.boxShadow =
+          "0 0 10px rgba(0, 255, 255, 0.5)";
+        document.getElementById("btn2").style.border = "2px solid #ffffff";
+        document.getElementById("btn2").style.boxShadow = "none";
+
+        wallpaper2.style.height = `${wallpaper_lock_height}%`;
+        wallpaper2.style.scale = `${wallpaper_lock_scale}%`;
+        wallpaper2.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+        wallpaper2.style.opacity = 1;
+        wallpaper2.style.transform = wallpaper_lock_transform;
+
+        if (hide_wallpaper) {
+          wallpaper_lock_off_opacity = 0;
+          wallpaper_lock_off_height = wallpaper_lock_height;
+          wallpaper_lock_off_scale = wallpaper_lock_scale;
+          wallpaper_lock_off_borderRadius = wallpaper_lock_borderRadius;
+          wallpaper_lock_off_transform = wallpaper_lock_transform;
+        }
+      });
+      document.getElementById("btn2").addEventListener("click", () => {
+        wallpaper_lock_height = 100; //%
+        wallpaper_lock_scale = 100; //%
+        wallpaper_lock_borderRadius = 50; //px
+        wallpaper_lock_opacity = 1;
+        wallpaper_lock_transform = "translateY(0px)";
+        document.getElementById("btn2").style.border = "2px solid aqua";
+        document.getElementById("btn2").style.boxShadow =
+          "0 0 10px rgba(0, 255, 255, 0.5)";
+        document.getElementById("btn1").style.border = "2px solid #ffffff";
+        document.getElementById("btn1").style.boxShadow = "none";
+
+        wallpaper2.style.height = `${wallpaper_lock_height}%`;
+        wallpaper2.style.scale = `${wallpaper_lock_scale}%`;
+        wallpaper2.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+        wallpaper2.style.opacity = 1;
+        wallpaper2.style.transform = wallpaper_lock_transform;
+
+        if (hide_wallpaper) {
+          wallpaper_lock_off_opacity = 0;
+          wallpaper_lock_off_height = wallpaper_lock_height;
+          wallpaper_lock_off_scale = wallpaper_lock_scale;
+          wallpaper_lock_off_borderRadius = wallpaper_lock_borderRadius;
+          wallpaper_lock_off_transform = wallpaper_lock_transform;
+        }
+      });
+
+      home_btn.addEventListener("click", () => {
+        app4_home.classList.add("open");
+      });
+      back8.addEventListener("click", () => {
+        app4_home.classList.remove("open");
+      });
+      let scale_icon = 100; // Biến mặc định ban đầu là 120
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const buttons_size = document.querySelectorAll(".scale-button");
+        const acctive_button_size = document.querySelector(
+          '.scale-button[data-scale="120"]'
+        );
+
+        // Đảm bảo nút 120% được chọn mặc định khi tải trang
+        if (acctive_button_size) {
+          acctive_button_size.classList.add("active");
+        }
+
+        buttons_size.forEach((button2) => {
+          button2.addEventListener("click", function () {
+            // Xóa class 'active' khỏi tất cả các nút
+            buttons_size.forEach((btn) => btn.classList.remove("active"));
+
+            // Thêm class 'active' vào nút được click
+            this.classList.add("active");
+
+            // Cập nhật biến scale_icon
+            scale_icon = parseInt(this.dataset.scale);
+            console.log("scale_icon:", scale_icon);
+
+            for (let i = 1; i <= 11; i++) {
+              boxes[`box${i}`].style.scale = `${scale_icon}%`;
+            }
+            if (scale_icon == 80) {
+              boxes[`box9`].style.scale = `90%`;
+              boxes[`box10`].style.scale = `90%`;
+            } else if (scale_icon == 90) {
+              boxes[`box9`].style.scale = `95%`;
+              boxes[`box10`].style.scale = `95%`;
+            }
+            currentOpeningBtn.style.scale = `100%`;
+          });
+        });
+      });
+      let dock_bar = 1;
+      document
+        .getElementById("dock-bar")
+        .addEventListener("click", function () {
+          this.classList.toggle("active");
+          dock_bar = this.classList.contains("active") ? 1 : 0;
+
+          if (dock_bar) {
+            document.querySelector(".khayapp").style.opacity = 1;
+          } else {
+            document.querySelector(".khayapp").style.opacity = 0;
+          }
+        });
+      let dark_mode = 1;
+      document
+        .getElementById("dark-mode")
+        .addEventListener("click", function () {
+          this.classList.toggle("active");
+          dark_mode = this.classList.contains("active") ? 1 : 0;
+
+          if (dark_mode) {
+            aod_btn.style.background = "#171719";
+            lock_btn.style.background = "#171719";
+            home_btn.style.background = "#171719";
+            wallpaper_btn.style.background = "#171719";
+
+            aod_btn.style.color = "#eaeaea";
+            lock_btn.style.color = "#eaeaea";
+            home_btn.style.color = "#eaeaea";
+            wallpaper_btn.style.color = "#eaeaea";
+
+            document.querySelectorAll(".finger-btn").forEach((el) => {
+              el.style.color = "#eaeaea";
+              el.style.background = "#171719";
+            });
+
+            app4.style.background = "#010101";
+            app4_finger.style.background = "#010101";
+            app4_home.style.background = "#010101";
+            app4_theme.style.background = "#010101";
+            app4_vesion.style.background = "#010101";
+            app4animation.style.background = "#010101";
+            app4main.style.background = "#010101";
+            app4main.style.background = "#010101";
+            aod_option.style.background = "#010101";
+            wallpaper_option.style.background = "#010101";
+            document.getElementById("app4credits").style.background = "#010101";
+
+            for (let i = 1; i <= 11; i++) {
+              appopen[`box${i}`].style.background = "#010101";
+              appopen[`box${i}`].style.color = "#eaeaea";
+            }
+
+            document.querySelectorAll(".setting-item").forEach((el) => {
+              el.style.color = "#ffffff";
+              el.style.background = "#171719";
+            });
+
+            document.querySelectorAll(".settings-box").forEach((el) => {
+              el.style.color = "#ffffff";
+              el.style.background = "#171719";
+            });
+
+            document.querySelectorAll(".speed-box").forEach((el) => {
+              el.style.color = "#ffffff";
+              el.style.background = "#171719";
+            });
+
+            document.querySelectorAll(".btn_calc").forEach((el) => {
+              el.style.color = "#aba9ab";
+              el.style.background = "#272627";
+            });
+
+            document.querySelectorAll(".equal_calc").forEach((el) => {
+              el.style.color = "#ffeff6";
+              el.style.background = "#f45e5a";
+            });
+
+            document.querySelectorAll(".orange_calc").forEach((el) => {
+              el.style.color = "#e85f5c";
+              el.style.background = "#341414";
+            });
+
+            document.querySelectorAll(".gray_calc").forEach((el) => {
+              el.style.color = "#db5e61";
+            });
+
+            document.querySelectorAll(".btn_phone").forEach((el) => {
+              el.style.color = "#b5b5b5";
+            });
+
+            document.querySelectorAll(".scale-button").forEach((el) => {
+              el.style.background = "#171719";
+              el.style.color = "#ffffff";
+            });
+
+            document.querySelector(".content-box-vesion").style.background =
+              "#171719";
+            document.querySelector(".content-box-vesion").style.color =
+              "#eaeaea";
+
+            document.querySelector(".add-button").style.background = "#171719";
+            document.querySelector(".add-button").style.color = "#eaeaea";
+            document.querySelector(".controls").style.background =
+              "rgba(0, 0, 0, 0.85)";
+            document.getElementById("btn1").style.background = "#171719";
+            document.getElementById("btn2").style.background = "#171719";
+            document.getElementById("btn1").style.color = "#ffffff";
+            document.getElementById("btn2").style.color = "#ffffff";
+
+            app4.style.color = "#eaeaea";
+            app4_finger.style.color = "#eaeaea";
+            app4_home.style.color = "#eaeaea";
+            app4_theme.style.color = "#eaeaea";
+            app4_vesion.style.color = "#eaeaea";
+            app4animation.style.color = "#eaeaea";
+            app4main.style.color = "#eaeaea";
+            document.getElementById("app4credits").style.color = "#eaeaea";
+
+            aod_option.style.color = "#eaeaea";
+            wallpaper_option.style.color = "#eaeaea";
+
+            document.querySelectorAll(".button-finger").forEach((el) => {
+              el.style.background = "#171719";
+              el.style.color = "#ffffff";
+            });
+
+            document.querySelector(".khaysetting1").style.background =
+              "#171719";
+            document.querySelector(".khaysetting1-2").style.background =
+              "#171719";
+            document.querySelector(".khaysetting3").style.background =
+              "#171719";
+            document.querySelector(".khaysetting4").style.background =
+              "#171719";
+            document.querySelector(".khaysetting1-1").style.background =
+              "#171719";
+          } else {
+            aod_btn.style.background = "#ffffff";
+            lock_btn.style.background = "#ffffff";
+            home_btn.style.background = "#ffffff";
+            wallpaper_btn.style.background = "#ffffff";
+
+            aod_btn.style.color = "#000000";
+            lock_btn.style.color = "#000000";
+            home_btn.style.color = "#000000";
+            wallpaper_btn.style.color = "#000000";
+
+            document.querySelectorAll(".finger-btn").forEach((el) => {
+              el.style.color = "#000000";
+              el.style.background = "#ffffff";
+            });
+
+            app4.style.background = "#eaeaea";
+            app4_finger.style.background = "#eaeaea";
+            app4_home.style.background = "#eaeaea";
+            app4_theme.style.background = "#eaeaea";
+            app4_vesion.style.background = "#eaeaea";
+            app4animation.style.background = "#eaeaea";
+            app4main.style.background = "#eaeaea";
+            wallpaper_option.style.background = "#eaeaea";
+            aod_option.style.background = "#eaeaea";
+            document.getElementById("app4credits").style.background = "#eaeaea";
+
+            for (let i = 1; i <= 11; i++) {
+              appopen[`box${i}`].style.color = "#010101";
+              appopen[`box${i}`].style.background = "#eaeaea";
+            }
+
+            document.querySelectorAll(".setting-item").forEach((el) => {
+              el.style.background = "#ffffff";
+              el.style.color = "#000000";
+            });
+
+            document.querySelectorAll(".finger-btn").forEach((el) => {
+              el.style.background = "#ffffff";
+              el.style.color = "#000000";
+            });
+
+            document.querySelectorAll(".settings-box").forEach((el) => {
+              el.style.background = "#ffffff";
+              el.style.color = "#000000";
+            });
+
+            document.querySelectorAll(".speed-box").forEach((el) => {
+              el.style.background = "#ffffff";
+              el.style.color = "#000000";
+            });
+
+            document.querySelectorAll(".btn_calc").forEach((el) => {
+              el.style.color = "#353535";
+              el.style.background = "#f3f3f3";
+            });
+
+            document.querySelectorAll(".equal_calc").forEach((el) => {
+              el.style.color = "#ffffff";
+              el.style.background = "#f0625d";
+            });
+
+            document.querySelectorAll(".orange_calc").forEach((el) => {
+              el.style.color = "#de4315";
+              el.style.background = "#fbc4ab";
+            });
+
+            document.querySelectorAll(".gray_calc").forEach((el) => {
+              el.style.color = "#d84315";
+            });
+
+            document.querySelectorAll(".btn_phone").forEach((el) => {
+              el.style.color = "rgb(70, 70, 70)";
+            });
+
+            document.querySelectorAll(".scale-button").forEach((el) => {
+              el.style.color = "#000000";
+              el.style.background = "#ffffff";
+            });
+
+            document.querySelectorAll(".button-finger").forEach((el) => {
+              el.style.color = "#171719";
+              el.style.background = "#ffffff";
+            });
+
+            document.querySelector(".content-box-vesion").style.background =
+              "#ffffff";
+            document.querySelector(".content-box-vesion").style.color =
+              "#000000";
+
+            app4.style.color = "#010101";
+            app4_finger.style.color = "#010101";
+            app4_home.style.color = "#010101";
+            app4_theme.style.color = "#010101";
+            app4_vesion.style.color = "#010101";
+            app4animation.style.color = "#010101";
+            app4main.style.color = "#010101";
+            wallpaper_option.style.color = "#010101";
+            aod_option.style.color = "#010101";
+            document.getElementById("app4credits").style.color = "#010101";
+
+            document.querySelectorAll(".nav").forEach((el) => {
+              el.style.background = "#171719";
+            });
+
+            document.querySelector(".add-button").style.background = "#ffffff";
+            document.querySelector(".add-button").style.color = "#000000";
+            document.querySelector(".controls").style.background =
+              "rgba(255, 255, 255, 0.85)";
+            document.getElementById("btn1").style.background = "#ffffff";
+            document.getElementById("btn2").style.background = "#ffffff";
+            document.getElementById("btn1").style.color = "#000000";
+            document.getElementById("btn2").style.color = "#000000";
+
+            document.querySelector(".khaysetting1").style.background =
+              "#ffffff";
+            document.querySelector(".khaysetting1-2").style.background =
+              "#ffffff";
+            document.querySelector(".khaysetting3").style.background =
+              "#ffffff";
+            document.querySelector(".khaysetting4").style.background =
+              "#ffffff";
+            document.querySelector(".khaysetting1-1").style.background =
+              "#ffffff";
+          }
+        });
+
+      finger.addEventListener("click", () => {
+        app4_finger.classList.add("open");
+      });
+      back9.addEventListener("click", () => {
+        app4_finger.classList.remove("open");
+      });
+      const fingerprint_preview = document.getElementById(
+        "fingerprint_preview"
+      );
+      const btnWhite = document.getElementById("btn-white");
+      const btnBlue = document.getElementById("btn-blue");
+
+      fingerprint_preview.style.filter = "brightness(1000%) grayscale(100%)";
+      fingerprint.style.filter = "brightness(1000%) grayscale(100%)";
+      btnWhite.style.border = "2px solid aqua";
+
+      btnWhite.addEventListener("click", () => {
+        fingerprint_preview.style.filter = "brightness(1000%) grayscale(100%)";
+        fingerprint.style.filter = "brightness(1000%) grayscale(100%)";
+        btnWhite.classList.add("active");
+        btnBlue.classList.remove("active");
+        btnBlue.style.border = "2px solid rgb(225, 225, 225)";
+        btnWhite.style.border = "2px solid aqua";
+      });
+
+      btnBlue.addEventListener("click", () => {
+        fingerprint_preview.style.filter =
+          "brightness(0) saturate(100%) invert(72%) sepia(35%) saturate(1172%) hue-rotate(174deg) brightness(104%) contrast(104%)";
+        fingerprint.style.filter =
+          "brightness(0) saturate(100%) invert(72%) sepia(35%) saturate(1172%) hue-rotate(174deg) brightness(104%) contrast(104%)";
+        btnWhite.style.border = "2px solid rgb(225, 225, 225)";
+        btnBlue.style.border = "2px solid aqua";
+      });
+
+      vesion_setting.addEventListener("click", () => {
+        app4_vesion.classList.add("open");
+      });
+      back10.addEventListener("click", () => {
+        app4_vesion.classList.remove("open");
+      });
+
+      // -- nofication --
+      const thanhS1 = document.querySelector(".thanh-status");
+      const thanhS2 = document.querySelector(".thanh-status2");
+      const lp2 = document.querySelector(".lp2");
+      const notificationcenter = document.querySelector(".left-text-tb");
+
+      let draggingS = false;
+      let isMoS = false;
+      let startYS = 0;
+      let startXS = 0;
+      let deltaYS = 0;
+      let deltaXS = 0;
+
+      function updateTransformS(y, x) {
+        const y2 = y;
+        if (y2 < -90) y2 = -90;
+        if (y2 > 0) y2 = 0;
+        //if (y < -50) y = -50;
+        if (y > 0) y = 0;
+
+        const scale = 1 + -y / 60;
+
+        clock.style.transition = "all 0.2s";
+        clock.style.transform = `translateX(calc(${-y}px / 3)) translateY(${-y2}px) scale(${scale})`;
+        lp2.style.transition = "all 0.1s";
+        lp2.style.opacity = `${scale - 1} `;
+        lp2.style.zIndex = 19999;
+
+        thanhS1.style.transition = "none";
+        thanhS1.style.transform = `translateX(50%) translateY(${-y}px)`;
+      }
+
+      thanhS1.addEventListener("touchstart", (e) => {
+        if (!ison) return;
+
+        isMoS = true;
+        startYS = e.touches[0].clientY;
+        startXS = e.touches[0].clientX;
+        clock.classList.add("hien");
+        notificationcenter.style.transform = "translateY(0px)";
+      });
+
+      thanhS1.addEventListener(
+        "touchmove",
+        (e) => {
+          e.preventDefault();
+          if (!isMoS) return;
+          deltaYS = startYS - e.touches[0].clientY;
+          deltaXS = e.touches[0].clientX - startXS;
+          updateTransformS(deltaYS, deltaXS);
+        },
+        {
+          passive: false,
+        }
+      );
+
+      thanhS1.addEventListener("touchend", () => {
+        if (deltaYS < -70) monotification();
+        else dongnotification();
+        deltaYS = 0;
+        deltaXS = 0;
+        thanhS1.style.transform = `translateX(50%)`;
+      });
+
+      thanhS1.addEventListener("mousedown", (e) => {
+        if (!ison) return;
+
+        deltaYS = 0;
+        deltaXS = 0;
+        startYS = 0;
+        startXS = 0;
+
+        isMoS = true;
+        draggingS = true;
+
+        startYS = e.clientY;
+        startXS = e.clientX;
+        clock.classList.add("hien");
+        notificationcenter.style.transform = "translateY(0px)";
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!draggingS || !isMoS) return;
+        deltaYS = startYS - e.clientY;
+        deltaXS = e.clientX - startXS;
+        updateTransformS(deltaYS, deltaXS);
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!draggingS || !isMoS) return;
+        draggingS = false;
+        thanhS1.style.transform = `translateX(50%)`;
+        if (deltaYS < -70) monotification();
+        else dongnotification();
+      });
+
+      lp2.addEventListener("click", () => {
+        dongnotification();
+      });
+      lp2.addEventListener("touchend", () => {
+        dongnotification();
+      });
+
+      function monotification() {
+        clock.style.transition =
+          "all 0.5s cubic-bezier(0.23, 0.55, 0.54, 0.97)";
+        clock.style.transform = `translateX(25px) translateY(50px) scale(calc(1 + 50 / 40))`;
+        lp2.style.transition = "all 0s";
+        notificationcenter.classList.add("open");
+        lp2.style.opacity = `1`;
+        lp2.style.zIndex = 19999;
+        clock.classList.add("open");
+        thanhS1.style.pointerEvents = "none";
+      }
+      function dongnotification() {
+        clock.style.transition =
+          "all 0.4s cubic-bezier(0.23, 0.55, 0.54, 0.97)";
+        clock.style.transform = `none`;
+        lp2.style.transition = "all 0.3s";
+        lp2.style.opacity = `0`;
+        lp2.style.zIndex = 1;
+        notificationcenter.style.transform = "translateY(-60px)";
+        notificationcenter.classList.remove("open");
+        clock.classList.remove("open");
+        if (islock) clock.classList.remove("hien");
+        thanhS1.style.pointerEvents = "auto";
+      }
+      function closePopup_noanim() {
+        if (!currentOpeningBtn) return;
+        app.classList.remove("open");
+        currentOpeningBtn.style.transition =
+          "all 0s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+        clearTimeout(autoHideClickablesTimer);
+        closing = true;
+        setTimeout(() => {
+          closing = false;
+        }, 300);
+        currentOpeningBtn.classList.remove("open");
+        setTimeout(() => {
+          currentOpeningBtn.classList.remove("hien");
+          currentOpeningBtn = null;
+          scale = 1;
+        }, 0);
+        WallPaper.classList.remove("open");
+        lp.classList.remove("open");
+
+        currentOpeningBtn.style.zIndex = "5";
+
+        thanh.style.transform = "translateX(-50%)";
+        allApp.style.transition = "all 0s cubic-bezier(0.23, 0.55, 0.54, 0.97)";
+        allApp.classList.remove("open");
+
+        if (nav) nav.classList.remove("open");
+        isMo = false;
+
+        Object.values(clickables).forEach((el) => {
+          el.style.display = "block";
+        });
+      }
+
+      const speedBoxes = document.querySelectorAll(".speed-box");
+      speedBoxes.forEach((box) => {
+        box.addEventListener("click", () => {
+          // Bỏ class 'active' ở tất cả box
+          speedBoxes.forEach((b) => b.classList.remove("active"));
+
+          // Gắn class 'active' cho box được bấm
+          box.classList.add("active");
+
+          // Cập nhật biến tốc độ
+          currentSpeed = parseFloat(box.dataset.speed);
+          currentSpeed5 = 0.5 * currentSpeed;
+          currentSpeed4 = 0.4 * currentSpeed;
+          currentSpeed3 = 0.3 * currentSpeed;
+          duration = 1.7 * currentSpeed;
+          document.getElementById(
+            "scaling-box"
+          ).style.animation = `scaleUpDown ${duration}s ease-out infinite`;
+
+          console.log("Speed set to:", currentSpeed);
+        });
+      });
+
+      const animation = lottie.loadAnimation({
+        container: document.getElementById("lottie"),
+        renderer: "svg",
+        loop: false,
+        autoplay: false,
+        path: "https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/Artboard_1.json",
+      });
+      animation.setSpeed(0.4 * currentSpeed);
+      animation.goToAndStop(animation.totalFrames - 1, true);
+
+      const finger_print = lottie.loadAnimation({
+        container: document.getElementById("unlock-btn2"),
+        renderer: "svg",
+        loop: false,
+        autoplay: true,
+        path: "https://raw.githubusercontent.com/quandz24-ui/one-ui-7/refs/heads/main/finger_print.json",
+      });
+      finger_print.setSpeed(currentSpeed);
+      finger_print.goToAndStop(animation.totalFrames - 1, true);
+
+      // battery
+      let battery_level = 100;
+      let charging = false;
+      const battery4 = document.querySelector(".battery-small2");
+      const battery_num = document.querySelector(".battery-num");
+
+      function updateBatteryInfo(battery) {
+        battery_level = Math.round(battery.level * 100);
+        charging = battery.charging;
+        battery4.style.width = `calc(${battery_level}% / 1.25)`;
+        if (battery_level <= 20) battery4.style.background = "red";
+        if (battery_level > 20) battery4.style.background = "white";
+        battery_num.textContent = `${battery_level}`;
+        if (charging) {
+          battery4.style.background = "#26bd44";
+        }
+      }
+
+      if ("getBattery" in navigator) {
+        navigator.getBattery().then((battery) => {
+          // Cập nhật lần đầu
+          updateBatteryInfo(battery);
+
+          // Cập nhật khi pin thay đổi
+          battery.addEventListener("levelchange", () =>
+            updateBatteryInfo(battery)
+          );
+          battery.addEventListener("chargingchange", () =>
+            updateBatteryInfo(battery)
+          );
+        });
+      } else {
+        console.warn("Trình duyệt không hỗ trợ Battery API.");
+      }
+    </script>
+    <script>
+      setTimeout(() => {
+        finger_print.stop();
+        const loading = document.getElementById("loading-screen");
+        loading.style.opacity = "0";
+        setTimeout(() => {
+          loading.style.display = "none";
+          finger_print.play();
+        }, 300);
+      }, 5000); // 5 giây
+    </script>
+    <script>
+      let display_calc = document.getElementById("display_calc");
+
+      function append_calc(value) {
+        const current = display_calc.innerText;
+
+        if (current === "Error") return;
+        else if (current === "Infinity") return;
+        else if (current === "NaN") return;
+
+        if (value === "+/-") {
+          if (current.startsWith("-")) {
+            display_calc.innerText = current.slice(1);
+          } else if (current !== "0") {
+            display_calc.innerText = "-" + current;
+          }
+        } else if (value === ".") {
+          if (current === "0") {
+            display_calc.innerText = "0.";
+          } else {
+            display_calc.innerText += ".";
+          }
+        } else {
+          if (current === "0") {
+            display_calc.innerText = value;
+          } else {
+            display_calc.innerText += value;
+          }
+        }
+      }
+
+      function clearDisplay_calc() {
+        display_calc.innerText = "0";
+      }
+
+      function backspace_calc() {
+        if (display_calc.innerText === "Error") return;
+
+        let text = display_calc.innerText;
+        if (text.length > 1) {
+          display_calc.innerText = text.slice(0, -1);
+        } else {
+          display_calc.innerText = "0";
+        }
+      }
+
+      function calculate_calc() {
+        if (display_calc.innerText === "Error") return;
+        else if (display_calc.innerText === "Infinity") return;
+        else if (display_calc.innerText === "NaN") return;
+
+        try {
+          const expression = display_calc.innerText
+            .replace(/:/g, "/")
+            .replace(/×/g, "*");
+
+          display_calc.innerText = eval(expression);
+        } catch {
+          display_calc.innerText = "Error";
+        }
+      }
+    </script>
+    <script>
+      let display_phone = document.getElementById("display_phone");
+
+      function append_phone(val) {
+        if (display_phone.innerText === " ") {
+          display_phone.innerText = val;
+        } else {
+          display_phone.innerText += val;
+        }
+      }
+
+      function backspace_phone() {
+        let text = display_phone.innerText;
+        if (text.length > 1) {
+          display_phone.innerText = text.slice(0, -1);
+        } else {
+          display_phone.innerText = " ";
+        }
+      }
+
+      function call_phone() {
+        let num = display_phone.innerText;
+        display_phone.innerText = " ";
+        if (num != "") tb_system("SIM card not found");
+      }
+
+      function tb_system(message) {
+        const toast = document.getElementById("systemToast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(tb_system._timeout); // Clear if multiple calls
+        tb_system._timeout = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000); // Hiển thị trong 3 giây
+      }
+    </script>
+  </body>
+</html>
